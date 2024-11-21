@@ -10,4 +10,10 @@ export default defineConfig({
     environment: "jsdom",
     setupFiles: "./tests/setup.ts",
   },
+  resolve: {
+    alias: [
+      { find: "@_src", replacement: "/src" },
+      { find: "@_components", replacement: "/src/components" },
+    ]
+  }
 })
