@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { css } from 'styled-components';
 
 export const PagingButtonContainer = styled.div`
   display: flex;
@@ -11,11 +11,23 @@ export const PagingButtonContainer = styled.div`
 export const PageButton = styled.button<{ $isActive: boolean }>`
   border: none;
   background: none;
-  font-size: ${({ $isActive }) => ($isActive ? "16px" : "14px")};
-  font-weight: ${({ $isActive }) => ($isActive ? "bold" : "normal")};
-  text-decoration: ${({ $isActive }) => ($isActive ? "underline" : "none")};
   cursor: pointer;
   padding: 0 5px;
+
+  ${({ $isActive }) => {
+    return $isActive 
+      ? css`
+          font-size: 16px;
+          font-weight: bold;
+          text-decoration: underline;
+        ` 
+      : css`
+          font-size: 14px;
+          font-weight: normal;
+          text-decoration: none;
+        `;
+  }}
+
   &:focus {
     outline: none;
   }
