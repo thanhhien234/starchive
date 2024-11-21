@@ -23,9 +23,7 @@ function PostItem({ title, content, createdAt, userName, userIntro }: PostItemPr
   return (
     <Wrapper>
       <Link to="#">
-        <Title>
-          { title }
-        </Title>
+        <Title>{ title }</Title>
       </Link>
       <UserProfileWrapper>
         <UserImage>
