@@ -1,9 +1,8 @@
-import React from "react";
 import exampleProfile from "../../assets/images/example-profile.svg";
 import toggleIcon from "../../assets/icons/toggle-icon.svg";
 import { NavbarContainer, ToggleIcon, ProfileIcon } from "./Navbar.styles";
 
-const Navbar: React.FC = () => {
+function Navbar() {
   return (
     <NavbarContainer>
       <ToggleIcon src={toggleIcon} alt="toggle" />
