@@ -6,15 +6,65 @@ export class PostService {
   constructor(private readonly prisma: PrismaService) {}
 
   async getPostsByCategory(categoryId: bigint) {
-    // TODO: 하위 카테고리까지 포함하여 조회하려면 추가 로직 필요
+    const categoryMap = new Map<BigInt, CategoryTree>();
+
+    const allCategories = await this.prisma.category.findMany();
+
+    allCategories.forEach(({ categoryId, name, parentId }) => {
+      const categoryIdLong = BigInt(categoryId);
+
+      if (!categoryMap.has(categoryIdLong)) {
+        categoryMap.set(categoryIdLong, new CategoryTree());
+      }
+      const currentNode: CategoryTree = categoryMap.get(categoryIdLong);
+      currentNode.fillNode(categoryIdLong, name);
+
+      const parentIdLong = BigInt(parentId);
+      if (!categoryMap.has(parentIdLong)) {
+        categoryMap.set(parentIdLong, new CategoryTree());
+      }
+      const parentNode: CategoryTree = categoryMap.get(parentIdLong);
+
+      parentNode.addChild(currentNode);
+    });
+
+    const searchCategory: CategoryTree = categoryMap.get(categoryId);
+
     return this.prisma.post.findMany({
       where: {
-        categoryId: categoryId,
+        categoryId: {
+          in: searchCategory.getAllDescendantIds(),
+        },
       },
     });
   }
 
   async getAllPosts() {
     return this.prisma.post.findMany();
+  }
+}
+
+class CategoryTree {
+  private id: bigint;
+  private name: String;
+  private children: CategoryTree[] = [];
+
+  public fillNode(id: bigint, name: string) {
+    this.id = id;
+    this.name = name;
+  }
+
+  public addChild(childNode: CategoryTree) {
+    this.children.push(childNode);
+  }
+
+  public getAllDescendantIds(): bigint[] {
+    const idList: bigint[] = [this.id];
+
+    this.children.forEach((child: CategoryTree) => {
+      idList.push(...child.getAllDescendantIds());
+    });
+
+    return idList;
   }
 }
