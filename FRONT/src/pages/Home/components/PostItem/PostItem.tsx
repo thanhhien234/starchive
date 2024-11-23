@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import { 
   Content, 
   SubInfo, 
+  TagContainer, 
   Title, 
   UserImage, 
   UserInfoWrapper, 
@@ -22,6 +23,9 @@ interface PostItemProps {
 function PostItem({ title, content, createdAt, userName, userIntro }: PostItemProps) {
   return (
     <Wrapper>
+      <TagContainer>
+        Software Engineering &gt; CI/CD
+      </TagContainer>
       <Link to="#">
         <Title>{ title }</Title>
       </Link>

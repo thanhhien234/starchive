@@ -66,3 +66,8 @@ export const Content = styled.p`
   -webkit-box-orient: vertical;
   overflow: hidden;
 `;
+
+export const TagContainer = styled.span`
+  color: var(--point-color);
+  font-size: 12px;
+`
