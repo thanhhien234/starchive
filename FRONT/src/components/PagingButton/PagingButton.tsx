@@ -1,4 +1,4 @@
-import { PagingButtonContainer, ArrowButton, PageButton } from "./PagingButton.styles";
+import { PagingButtonContainer, ArrowButton, PageButton } from "./PagingButton.style";
 import leftArrow from "../../assets/icons/left-arrow.svg";
 import rightArrow from "../../assets/icons/right-arrow.svg";
 

@@ -1,6 +1,6 @@
 import exampleProfile from "../../assets/images/example-profile.svg";
 import toggleIcon from "../../assets/icons/toggle-icon.svg";
-import { NavbarContainer, ToggleIcon, ProfileIcon } from "./Navbar.styles";
+import { NavbarContainer, ToggleIcon, ProfileIcon } from "./Navbar.style";
 
 function Navbar() {
   return (
