@@ -28,6 +28,7 @@ export const InfoContainer = styled.section`
         gap: 10px;
     }
 `;
+
 export const LeftContainer = styled.article`
     display: flex;
     flex-direction: column;
@@ -51,6 +52,7 @@ export const LogoWrapper = styled.div`
         margin: 0;
     }
 `;
+
 export const TextWrapper = styled.div`
     display: flex;
     flex-direction: column;
@@ -85,6 +87,7 @@ export const RightContainer = styled.article`
         align-items: center;
     }
 `;
+
 export const FooterLinkList = styled.ul`
     display: flex;
     flex-direction: row;
