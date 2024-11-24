@@ -31,13 +31,13 @@ function Footer() {
         </LeftContainer>
         <RightContainer>
           <FooterLinkList>
-          <FooterLink><Link to="/">홈</Link></FooterLink>
-          <Separator />
-          <FooterLink><Link to="/">이용약관</Link></FooterLink>
-          <Separator />
-          <FooterLink><Link to="/">문의하기</Link></FooterLink>
-          <Separator />
-          <FooterLink><Link to="/">로그아웃</Link></FooterLink>
+            <FooterLink><Link to="/">홈</Link></FooterLink>
+            <Separator />
+            <FooterLink><Link to="/">이용약관</Link></FooterLink>
+            <Separator />
+            <FooterLink><Link to="/">문의하기</Link></FooterLink>
+            <Separator />
+            <FooterLink><Link to="/">로그아웃</Link></FooterLink>
           </FooterLinkList>
           <img src={githubIcon} alt="github-icon" />
         </RightContainer>
