@@ -6,7 +6,6 @@ import {
   CopyRight,
   LogoWrapper,
   TextWrapper,
-  BoldText,
   FooterLink,
   FooterLinkList,
   Separator,
@@ -25,7 +24,7 @@ function Footer() {
             <h4>Starchive</h4>
           </LogoWrapper>
           <TextWrapper>
-            <span>Powered by <BoldText>DevBadgers</BoldText></span>
+            <span>Powered by <strong>DevBadgers</strong></span>
             <span>010 - 2510 - 6762</span>
             <span>devbadgers@gmail.com</span>
           </TextWrapper>

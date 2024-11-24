@@ -62,9 +62,7 @@ export const TextWrapper = styled.div`
         margin-left: 0;
     }
 `;
-export const BoldText = styled.span`
-    font-weight: 700;
-`;
+
 export const CopyRight = styled.p`
     font-size: 11px;
     margin: 0;
