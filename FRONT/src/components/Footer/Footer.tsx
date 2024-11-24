@@ -11,6 +11,7 @@ import {
   FooterLinkList,
   Separator,
 } from "./Footer.style";
+import { Link } from "react-router-dom";
 import logoIcon from "../../assets/logo/logo.svg";
 import githubIcon from "../../assets/icons/github-icon.svg";
 
@@ -31,13 +32,13 @@ function Footer() {
         </LeftContainer>
         <RightContainer>
           <FooterLinkList>
-            <FooterLink><a href="#">홈</a></FooterLink>
-            <Separator />
-            <FooterLink><a href="#">이용약관</a></FooterLink>
-            <Separator />
-            <FooterLink><a href="#">문의하기</a></FooterLink>
-            <Separator />
-            <FooterLink><a href="#">로그아웃</a></FooterLink>
+          <FooterLink><Link to="/">홈</Link></FooterLink>
+          <Separator />
+          <FooterLink><Link to="/">이용약관</Link></FooterLink>
+          <Separator />
+          <FooterLink><Link to="/">문의하기</Link></FooterLink>
+          <Separator />
+          <FooterLink><Link to="/">로그아웃</Link></FooterLink>
           </FooterLinkList>
           <img src={githubIcon} alt="github-icon" />
         </RightContainer>
