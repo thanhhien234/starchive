@@ -33,11 +33,19 @@ export const CategoryToggleButton = styled.img<{ $isOpen: boolean }>`
     opacity: 0.7;
   }
 
-  ${({ $isOpen }) => css`
-    padding-top: ${$isOpen ? '1.5px' : '0'};
-    padding-right: ${$isOpen ? '0' : '1.5px'};
-    transform: rotate(${$isOpen ? '0' : '-90deg'});
-  `}
+  ${({ $isOpen }) => {
+  return $isOpen
+    ? css`
+        padding-top: 1.5px;
+        padding-right: 0;
+        transform: rotate(0);
+      `
+    : css`
+        padding-top: 0;
+        padding-right: 1.5px;
+        transform: rotate(-90deg);
+      `
+  }}
 `;
 
 export const SubcategoryGroup = styled.div`
