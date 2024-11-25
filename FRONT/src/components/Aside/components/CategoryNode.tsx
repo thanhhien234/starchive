@@ -1,5 +1,6 @@
 import categoryToggleButton from '../../../assets/icons/category-toggle-button.svg'
 import useCategoryNode from './useCategoryNode';
+import { Category } from '../types/Category';
 import {
   CategoryNodeContainer,
   CategoryButton,
@@ -7,12 +8,6 @@ import {
   SubcategoryGroup,
   CategoryTitle
 } from './CategoryNode.style';
-
-interface Category {
-  id: number;
-  name: string;
-  children: Category[];
-}
 
 interface CategoryNodeProps {
   category: Category;

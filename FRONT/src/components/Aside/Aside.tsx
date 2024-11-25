@@ -2,6 +2,7 @@ import CategoryNode from './components/CategoryNode';
 import cancelButton from '../../assets/icons/cancel-button.svg'
 import logoIcon from '../../assets/logo/logo.svg';
 import useAside from './useAside';
+import { Category } from './types/Category';
 import {
   Wrapper,
   Overlay,
@@ -16,12 +17,6 @@ const ALL_POSTS = {
   id: 0,
   name: "Posts",
   children: []
-}
-
-interface Category {
-  id: number;
-  name: string;
-  children: Category[];
 }
 
 function Aside() {
