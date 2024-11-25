@@ -1,12 +1,12 @@
-import categoryToggleButton from '../../assets/icons/category-toggle-button.svg'
-import useAside from './useAside';
+import categoryToggleButton from '../../../assets/icons/category-toggle-button.svg'
+import useAside from '../useAside';
 import {
   CategoryNodeContainer,
   CategoryButton,
   CategoryToggleButton,
   SubcategoryGroup,
   CategoryTitle
-} from './Aside.styles';
+} from './CategoryNode.style';
 
 interface Category {
   id: number;
