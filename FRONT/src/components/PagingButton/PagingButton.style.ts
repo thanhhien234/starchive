@@ -13,6 +13,7 @@ export const PageButton = styled.button<{ $isActive: boolean }>`
   background: none;
   cursor: pointer;
   padding: 0 5px;
+  width: 25px;
 
   ${({ $isActive }) => {
     return $isActive 
@@ -33,7 +34,8 @@ export const PageButton = styled.button<{ $isActive: boolean }>`
   }
 `;
 
-export const ArrowButton = styled.button`
+export const ArrowButton = styled.button<{ $visible?: boolean }>`
+  visibility: ${({ $visible }) => ($visible ? "visible" : "hidden")};
   cursor: pointer;
   background: transparent;
   display: flex;
