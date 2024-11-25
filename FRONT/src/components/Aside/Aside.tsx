@@ -10,7 +10,7 @@ import {
   CategoryList,
   TopCategoryItem,
   LogoWrapper,
-} from './Aside.styles';
+} from './Aside.style';
 
 const ALL_POSTS = {
   id: 0,
