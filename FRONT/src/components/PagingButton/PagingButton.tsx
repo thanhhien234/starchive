@@ -20,14 +20,13 @@ function PagingButton({
 
   return (
     <PagingButtonContainer>
-      {startPage > 1 && (
-        <ArrowButton
-          onClick={() => setCurrentPage(startPage - 1)}
-          disabled={currentPage === 1}
-        >
-          <img src={leftArrow} alt="left-arrow" />
-        </ArrowButton>
-      )}
+      <ArrowButton
+        onClick={() => setCurrentPage(startPage - 1)}
+        disabled={currentPage === 1}
+        $visible={startPage !== 1}
+      >
+        <img src={leftArrow} alt="left-arrow" />
+      </ArrowButton>
 
       {pagesArray.map((page) => (
         <PageButton
@@ -39,14 +38,13 @@ function PagingButton({
         </PageButton>
       ))}
 
-      {endPage < totalPages && (
-        <ArrowButton
-          onClick={() => setCurrentPage(endPage + 1)}
-          disabled={currentPage === totalPages}
-        >
-          <img src={rightArrow} alt="right-arrow" />
-        </ArrowButton>
-      )}
+      <ArrowButton
+        onClick={() => setCurrentPage(endPage + 1)}
+        disabled={currentPage === totalPages}
+        $visible={endPage < totalPages}
+      >
+        <img src={rightArrow} alt="right-arrow" />
+      </ArrowButton>
     </PagingButtonContainer>
   );
 }
