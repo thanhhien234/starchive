@@ -24,18 +24,24 @@ interface Category {
   children: Category[];
 }
 
-function Aside({ isAsideOpen, onClose }: { isAsideOpen: boolean; onClose: () => void}) {
-  const { category, activeCategoryId, handleCategorySelect } = useAside();
+function Aside() {
+  const {
+    category,
+    activeCategoryId,
+    isAsideOpen,
+    handleCategorySelect,
+    handleCloseAside
+  } = useAside();
 
   return (
     <>
-      <Overlay $isAsideOpen={isAsideOpen} onClick={onClose} />
+      <Overlay $isAsideOpen={isAsideOpen} onClick={handleCloseAside} />
       <Wrapper $isAsideOpen={isAsideOpen}>
         <Header>
           <CloseButton
             src={cancelButton}
             alt="close"
-            onClick={onClose}
+            onClick={handleCloseAside}
           />
           <LogoWrapper>
             <img src={logoIcon} alt="DevBadgers Logo" />
@@ -48,7 +54,6 @@ function Aside({ isAsideOpen, onClose }: { isAsideOpen: boolean; onClose: () => 
               category={ALL_POSTS}
               onSelect={handleCategorySelect}
               activeCategoryId={activeCategoryId}
-              onClose={onClose}
             />
           </TopCategoryItem>
           {category.map((topCategory: Category) => (
@@ -57,7 +62,6 @@ function Aside({ isAsideOpen, onClose }: { isAsideOpen: boolean; onClose: () => 
                 category={topCategory}
                 onSelect={handleCategorySelect}
                 activeCategoryId={activeCategoryId}
-                onClose={onClose}
               />
             </TopCategoryItem>
           ))}

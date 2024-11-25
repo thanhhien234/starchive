@@ -18,10 +18,9 @@ interface CategoryNodeProps {
   category: Category;
   activeCategoryId?: number;
   onSelect: (id: number) => void;
-  onClose: () => void;
 }
 
-function CategoryNode({ category, onSelect, activeCategoryId, onClose }: CategoryNodeProps) {
+function CategoryNode({ category, onSelect, activeCategoryId }: CategoryNodeProps) {
   const { isOpen, handleToggle } = useCategoryNode();
   const hasChildren = category.children && category.children.length > 0;
 
@@ -46,7 +45,6 @@ function CategoryNode({ category, onSelect, activeCategoryId, onClose }: Categor
               category={childCategory}
               onSelect={onSelect}
               activeCategoryId={activeCategoryId}
-              onClose={onClose}
             />
           ))}
         </SubcategoryGroup>
