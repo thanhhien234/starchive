@@ -5,19 +5,18 @@
     "children": [
       {
         "id": 2,
-        "name": "소프트웨어공학",
-        "children": [
-          {
-            "id": 3,
-            "name": "옵저버패턴",
-            "children": []
-          },
-          {
-            "id": 4,
-            "name": "싱글톤패턴",
-            "children": []
-          }
-        ]
+        "name": "스터디의 하위 카테고리",
+        "children": []
+      },
+      {
+        "id": 3,
+        "name": "스터디의 하위 카테고리",
+        "children": []
+      },
+      {
+        "id": 4,
+        "name": "스터디의 하위 카테고리",
+        "children": []
       }
     ]
   },
@@ -27,46 +26,14 @@
     "children": [
       {
         "id": 6,
-        "name": "그래프",
-        "children": [
-          {
-            "id": 7,
-            "name": "DFS",
-            "children": []
-          },
-          {
-            "id": 8, 
-            "name": "BFS",
-            "children": []
-          },
-          {
-            "id": 9,
-            "name": "최단경로",
-            "children": [
-              {
-                "id": 10,
-                "name": "다익스트라",
-                "children": []
-              },
-              {
-                "id": 11,
-                "name": "벨만-포드",
-                "children": []
-              }
-            ]
-          }
-        ]
+        "name": "알고리즘의 하위 카테고리",
+        "children": []
       },
       {
-        "id": 12,
-        "name": "자료구조",
+        "id": 7,
+        "name": "알고리즘의 하위 카테고리",
         "children": []
       }
     ]
-  },
-  {
-    "id": 13,
-    "name": "주간회고",
-    "children": []
   }
  ]

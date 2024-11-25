@@ -62,9 +62,7 @@ export const CategoryList = styled.ul`
 `;
 
 export const TopCategoryItem = styled.li`
-  border: 0.5px solid var(--sub-color);
-  border-radius: 16px;
-  padding: 16px;
+  padding: 8px;
   display: flex;
   flex-direction: column;
   gap: 8px;

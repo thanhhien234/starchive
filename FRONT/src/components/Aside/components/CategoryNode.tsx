@@ -2,11 +2,11 @@ import categoryToggleButton from '../../../assets/icons/category-toggle-button.s
 import useCategoryNode from './useCategoryNode';
 import { Category } from '../types/Category';
 import {
-  CategoryNodeContainer,
   CategoryButton,
   CategoryToggleButton,
   SubcategoryGroup,
-  CategoryTitle
+  TopCategoryTitle,
+  SubCategoryTitle
 } from './CategoryNode.style';
 
 interface CategoryNodeProps {
@@ -20,7 +20,7 @@ function CategoryNode({ category, onSelect, activeCategoryId }: CategoryNodeProp
   const hasChildren = category.children && category.children.length > 0;
 
   return (
-    <CategoryNodeContainer>
+    <>
       <CategoryButton onClick={() => onSelect(category.id)}>
         {hasChildren && (
           <CategoryToggleButton
@@ -30,21 +30,18 @@ function CategoryNode({ category, onSelect, activeCategoryId }: CategoryNodeProp
             onClick={handleToggle}
           />
         )}
-        <CategoryTitle $isActive={category.id === activeCategoryId}>{category.name}</CategoryTitle>
+        <TopCategoryTitle $isActive={category.id === activeCategoryId}>{category.name}</TopCategoryTitle>
       </CategoryButton>
       {hasChildren && isOpen && (
         <SubcategoryGroup>
           {category.children.map((childCategory: Category) => (
-            <CategoryNode
-              key={childCategory.id}
-              category={childCategory}
-              onSelect={onSelect}
-              activeCategoryId={activeCategoryId}
-            />
+            <CategoryButton onClick={() => onSelect(childCategory.id)}>
+              <SubCategoryTitle $isActive={childCategory.id === activeCategoryId}>{childCategory.name}</SubCategoryTitle>
+            </CategoryButton>
           ))}
         </SubcategoryGroup>
       )}
-    </CategoryNodeContainer>
+    </>
   );
 }
 
