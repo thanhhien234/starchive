@@ -10,7 +10,6 @@ interface Category {
 
 interface AsideState {
   isAsideOpen: boolean;
-  isOpen: boolean;
   activeCategoryId: number | undefined;
   category: Category[];
 }
@@ -18,7 +17,6 @@ interface AsideState {
 interface AsideActions {
   setIsAsideOpen: (isOpen: boolean) => void;
   handleCategorySelect: (categoryId: number) => void;
-  handleToggle: (e: React.MouseEvent) => void;
   handleCloseAside: () => void;
 }
 
@@ -27,7 +25,6 @@ function useAside(): AsideState & AsideActions {
 
   const [state, setState] = useState<AsideState>({
     isAsideOpen: true,
-    isOpen: false,
     activeCategoryId: undefined,
     category
   });
@@ -38,11 +35,6 @@ function useAside(): AsideState & AsideActions {
     handleCategorySelect: (categoryId) => {
       setState(prev => ({ ...prev, activeCategoryId: categoryId }));
       // navigate()로 나중에 함께 협의할 엔드포인트로 이동
-    },
-
-    handleToggle: (e) => {
-      e.stopPropagation();
-      setState(prev => ({ ...prev, isOpen: !prev.isOpen }));
     },
 
     handleCloseAside: () => setState(prev => ({ ...prev, isAsideOpen: false })),

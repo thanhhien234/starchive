@@ -1,5 +1,5 @@
 import categoryToggleButton from '../../../assets/icons/category-toggle-button.svg'
-import useAside from '../useAside';
+import useCategoryNode from './useCategoryNode';
 import {
   CategoryNodeContainer,
   CategoryButton,
@@ -22,7 +22,7 @@ interface CategoryNodeProps {
 }
 
 function CategoryNode({ category, onSelect, activeCategoryId, onClose }: CategoryNodeProps) {
-  const { isOpen, handleToggle } = useAside();
+  const { isOpen, handleToggle } = useCategoryNode();
   const hasChildren = category.children && category.children.length > 0;
 
   return (
