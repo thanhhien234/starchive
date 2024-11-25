@@ -9,6 +9,7 @@
     "paths": {
       "@_/*": ["src/*"],
       "@_components/*": ["src/components/*"],
+      "@_assets/*": ["src/assets/*"],
     }
   }
 }
