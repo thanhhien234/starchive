@@ -10,6 +10,7 @@ export const Wrapper = styled.article`
 
   & > a {
     text-decoration: none;
+    color: var(--text-color);
   }
 `;
 
