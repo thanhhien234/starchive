@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+// import { useNavigate } from 'react-router-dom';
 import category from './category.example.json';
 
 interface Category {
@@ -23,7 +23,7 @@ interface AsideActions {
 }
 
 function useAside(): AsideState & AsideActions {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
   const [state, setState] = useState<AsideState>({
     isAsideOpen: true,
