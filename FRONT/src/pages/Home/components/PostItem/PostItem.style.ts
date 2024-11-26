@@ -53,7 +53,7 @@ export const UserNameWrapper = styled.div`
 `;
 
 export const UserName = styled.span`
-  font-size: 12px;
+  color: var(--text-color);
 `;
 
 export const SubInfo = styled.span`
@@ -70,5 +70,4 @@ export const Content = styled.p`
 
 export const TagContainer = styled.span`
   color: var(--point-color);
-  font-size: 12px;
 `
