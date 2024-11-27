@@ -9,7 +9,6 @@ import {
   Header,
   CloseButton,
   CategoryList,
-  TopCategoryItem,
   LogoWrapper,
 } from './Aside.style';
 
@@ -44,21 +43,17 @@ function Aside() {
           </LogoWrapper>
         </Header>
         <CategoryList>
-          <TopCategoryItem>
+          <CategoryNode
+            category={ALL_POSTS}
+            onSelect={handleCategorySelect}
+            activeCategoryId={activeCategoryId}
+          />
+          {category.map((topCategory: Category) => (
             <CategoryNode
-              category={ALL_POSTS}
+              category={topCategory}
               onSelect={handleCategorySelect}
               activeCategoryId={activeCategoryId}
             />
-          </TopCategoryItem>
-          {category.map((topCategory: Category) => (
-            <TopCategoryItem key={topCategory.id}>
-              <CategoryNode
-                category={topCategory}
-                onSelect={handleCategorySelect}
-                activeCategoryId={activeCategoryId}
-              />
-            </TopCategoryItem>
             ))
           }
         </CategoryList>

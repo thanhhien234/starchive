@@ -20,7 +20,7 @@ function CategoryNode({ category, onSelect, activeCategoryId }: CategoryNodeProp
   const hasChildren = category.children && category.children.length > 0;
 
   return (
-    <>
+    <li>
       <CategoryButton onClick={() => onSelect(category.id)}>
         {hasChildren && (
           <CategoryToggleButton
@@ -41,7 +41,7 @@ function CategoryNode({ category, onSelect, activeCategoryId }: CategoryNodeProp
           ))}
         </SubcategoryGroup>
       )}
-    </>
+    </li>
   );
 }
 

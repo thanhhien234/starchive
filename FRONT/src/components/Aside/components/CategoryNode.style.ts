@@ -61,6 +61,7 @@ export const CategoryToggleButton = styled.img<{ $isOpen: boolean }>`
 
 export const SubcategoryGroup = styled.div`
   padding-left: 40px;
+  padding-top: 8px;
   display: flex;
   flex-direction: column;
   gap: 8px;
