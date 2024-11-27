@@ -2,7 +2,7 @@ import CategoryNode from './components/CategoryNode';
 import cancelButton from '../../assets/icons/cancel-button.svg'
 import logoIcon from '../../assets/logo/logo.svg';
 import useAside from './useAside';
-import { Category } from './types/Category';
+import { Category } from './types/category';
 import {
   Wrapper,
   Overlay,
