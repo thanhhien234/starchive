@@ -35,9 +35,9 @@ export const UserImage = styled.figure`
   height: 35px;
   border-radius: 100%;
   overflow: hidden;
-  display: flex:
+  display: flex;
   justify-content: center;
-  aligh-items: center;
+  align-items: center;
   flex: none;
 `;
 
