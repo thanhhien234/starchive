@@ -35,7 +35,7 @@ function CategoryNode({ category, onSelect, activeCategoryId }: CategoryNodeProp
       {hasChildren && isOpen && (
         <SubCategoryGroup>
           {category.children.map((childCategory: Category) => (
-            <CategoryButton onClick={() => onSelect(childCategory.id)}>
+            <CategoryButton key={childCategory.id} onClick={() => onSelect(childCategory.id)}>
               <SubCategoryTitle $isActive={childCategory.id === activeCategoryId}>{childCategory.name}</SubCategoryTitle>
             </CategoryButton>
           ))}

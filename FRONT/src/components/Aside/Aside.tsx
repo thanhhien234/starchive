@@ -50,6 +50,7 @@ function Aside() {
           />
           {category.map((topCategory: Category) => (
             <CategoryNode
+              key={topCategory.id}
               category={topCategory}
               onSelect={handleCategorySelect}
               activeCategoryId={activeCategoryId}
