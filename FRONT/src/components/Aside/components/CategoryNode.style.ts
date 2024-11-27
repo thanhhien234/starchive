@@ -6,6 +6,7 @@ export const CategoryButton = styled.button`
   background: none;
   border: none;
   cursor: pointer;
+  width: 100%;
   text-align: left;
   align-items: center;
 `;
