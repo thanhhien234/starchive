@@ -59,7 +59,8 @@ function Aside() {
                 activeCategoryId={activeCategoryId}
               />
             </TopCategoryItem>
-          ))}
+            ))
+          }
         </CategoryList>
       </Wrapper>
     </>
