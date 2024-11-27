@@ -4,7 +4,7 @@ import { Category } from '../types/Category';
 import {
   CategoryButton,
   CategoryToggleButton,
-  SubcategoryGroup,
+  SubCategoryGroup,
   TopCategoryTitle,
   SubCategoryTitle
 } from './CategoryNode.style';
@@ -33,13 +33,13 @@ function CategoryNode({ category, onSelect, activeCategoryId }: CategoryNodeProp
         <TopCategoryTitle $isActive={category.id === activeCategoryId}>{category.name}</TopCategoryTitle>
       </CategoryButton>
       {hasChildren && isOpen && (
-        <SubcategoryGroup>
+        <SubCategoryGroup>
           {category.children.map((childCategory: Category) => (
             <CategoryButton onClick={() => onSelect(childCategory.id)}>
               <SubCategoryTitle $isActive={childCategory.id === activeCategoryId}>{childCategory.name}</SubCategoryTitle>
             </CategoryButton>
           ))}
-        </SubcategoryGroup>
+        </SubCategoryGroup>
       )}
     </li>
   );
