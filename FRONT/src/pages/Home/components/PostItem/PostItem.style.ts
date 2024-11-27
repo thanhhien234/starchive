@@ -10,6 +10,7 @@ export const Wrapper = styled.article`
 
   & > a {
     text-decoration: none;
+    color: var(--text-color);
   }
 `;
 
@@ -34,9 +35,9 @@ export const UserImage = styled.figure`
   height: 35px;
   border-radius: 100%;
   overflow: hidden;
-  display: flex:
+  display: flex;
   justify-content: center;
-  aligh-items: center;
+  align-items: center;
   flex: none;
 `;
 
@@ -52,7 +53,7 @@ export const UserNameWrapper = styled.div`
 `;
 
 export const UserName = styled.span`
-  font-size: 12px;
+  color: var(--text-color);
 `;
 
 export const SubInfo = styled.span`
@@ -69,5 +70,4 @@ export const Content = styled.p`
 
 export const TagContainer = styled.span`
   color: var(--point-color);
-  font-size: 12px;
 `

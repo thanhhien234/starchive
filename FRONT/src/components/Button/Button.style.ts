@@ -1,6 +1,6 @@
 import styled, { css } from "styled-components";
 
-export const Wrapper = styled.button<{ $type: string, onClick: Function | undefined }>`
+export const Wrapper = styled.button<{ $type: string, onClick: () => void | undefined }>`
   padding: 5px 10px;
   border: none;
   border-radius: 5px;
