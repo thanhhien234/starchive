@@ -5,7 +5,7 @@ type RequestOptions = {
   params?: Record<string, string>
 }
 
-type ApiResponse<T> = {
+export type ApiResponse<T> = {
   data: T;
   status: number;
 }
