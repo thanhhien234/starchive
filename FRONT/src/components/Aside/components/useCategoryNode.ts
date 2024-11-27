@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-function useCategoryNode(): { isOpen: boolean; handleToggle: (e: React.MouseEvent) => void } {
+function useCategoryNode() {
   const [isOpen, setIsOpen] = useState(false);
 
   const handleToggle = (e: React.MouseEvent) => {
