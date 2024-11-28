@@ -14,15 +14,17 @@ datasource db {
 }
 
 model Category {
-  categoryId BigInt  @id @default(autoincrement()) // 기본 키
+  categoryId BigInt  @id @default(autoincrement()) 
   name       String  @db.VarChar(100)
-  parentId   BigInt? // 상위 카테고리 (nullable)
+  parentId   BigInt? 
 
-  @@map("Categories") // 실제 테이블 이름과 매핑
+  posts Post[] 
+
+  @@map("Categorys") 
 }
 
 model Post {
-  postId    BigInt  @id @default(autoincrement()) // 기본 키
+  postId    BigInt  @id @default(autoincrement())
   categoryId BigInt
   title     String  @db.VarChar(64)
   content   String  @db.Text
@@ -30,5 +32,28 @@ model Post {
   password  String  @db.VarChar(128)
   createAt  DateTime
 
-  @@map("Posts") // 실제 테이블 이름과 매핑
+  category Category @relation(fields: [categoryId], references: [categoryId]) 
+  postHashTags PostHashTag[] 
+
+  @@map("Posts") 
+}
+
+model PostHashTag {
+  postHashTagId BigInt  @id @default(autoincrement()) 
+  postId        BigInt                              
+  hashTagId     BigInt  
+
+  post    Post    @relation(fields: [postId], references: [postId])   
+  hashTag HashTag @relation(fields: [hashTagId], references: [hashTagId])         
+
+  @@map("PostHashTag") 
+}
+
+model HashTag {
+  hashTagId BigInt  @id @default(autoincrement()) 
+  name      String  @db.VarChar(32)              
+
+  postHashTags PostHashTag[]
+
+  @@map("HashTags")
 }
