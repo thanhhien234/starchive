@@ -5,17 +5,10 @@ import { PrismaService } from 'src/prisma/prisma.service';
 export class PostService {
   constructor(private readonly prisma: PrismaService) {}
 
-  async getPostsByCategory(categoryId: bigint) {
+  async getPosts(categoryId: bigint | null, hashTagId: bigint | null) {
     const categoryTreeMap = await this.makeCategoryTreeMap();
 
-    const searchCategory: CategoryTree = categoryTreeMap.get(categoryId);
-
-    const posts = await this.prisma.post.findMany({
-      where: {
-        categoryId: {
-          in: searchCategory?.getAllDescendantIds() ?? [],
-        },
-      },
+    let queryingObject = {
       include: {
         postHashTags: {
           include: {
@@ -23,24 +16,32 @@ export class PostService {
           },
         },
       },
-    });
+      where: {},
+    };
 
-    return this.toResponse(posts, categoryTreeMap);
-  }
+    if (categoryId) {
+      const searchCategory: CategoryTree = categoryTreeMap.get(categoryId);
 
-  public async getAllPosts() {
-    const categoryTreeMap = await this.makeCategoryTreeMap();
+      queryingObject.where = {
+        ...queryingObject.where,
+        categoryId: {
+          in: searchCategory?.getAllDescendantIds() ?? [],
+        },
+      };
+    }
 
-    const posts = await this.prisma.post.findMany({
-      include: {
+    if (hashTagId) {
+      queryingObject.where = {
+        ...queryingObject.where,
         postHashTags: {
-          // PostHashTag 관계 로드
-          include: {
-            hashTag: true, // HashTag 관계 로드
+          some: {
+            hashTagId: hashTagId,
           },
         },
-      },
-    });
+      };
+    }
+
+    const posts = await this.prisma.post.findMany(queryingObject);
 
     return this.toResponse(posts, categoryTreeMap);
   }
