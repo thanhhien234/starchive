@@ -16,6 +16,13 @@ export class PostService {
           in: searchCategory?.getAllDescendantIds() ?? [],
         },
       },
+      include: {
+        postHashTags: {
+          include: {
+            hashTag: true,
+          },
+        },
+      },
     });
 
     return this.toResponse(posts, categoryTreeMap);
@@ -24,13 +31,33 @@ export class PostService {
   public async getAllPosts() {
     const categoryTreeMap = await this.makeCategoryTreeMap();
 
-    const posts = await this.prisma.post.findMany();
+    const posts = await this.prisma.post.findMany({
+      include: {
+        postHashTags: {
+          // PostHashTag 관계 로드
+          include: {
+            hashTag: true, // HashTag 관계 로드
+          },
+        },
+      },
+    });
 
     return this.toResponse(posts, categoryTreeMap);
   }
 
   private toResponse(
-    posts: {
+    posts: ({
+      postHashTags: ({
+        hashTag: {
+          name: string;
+          hashTagId: bigint;
+        };
+      } & {
+        postId: bigint;
+        postHashTagId: bigint;
+        hashTagId: bigint;
+      })[];
+    } & {
       postId: bigint;
       categoryId: bigint;
       title: string;
@@ -38,7 +65,7 @@ export class PostService {
       author: string;
       password: string;
       createAt: Date;
-    }[],
+    })[],
     categoryTreeMap: Map<BigInt, CategoryTree>,
   ) {
     return posts.map((post) => {
@@ -53,6 +80,10 @@ export class PostService {
         title: post.title,
         content: post.content.slice(0, 350),
         createdAt: post.createAt,
+        hashTags: post.postHashTags.map(({ hashTag }) => ({
+          hashTagId: Number(hashTag.hashTagId),
+          name: hashTag.name,
+        })),
       };
     });
   }
