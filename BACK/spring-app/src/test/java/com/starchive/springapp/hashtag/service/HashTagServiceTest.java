@@ -5,12 +5,15 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import com.starchive.springapp.hashtag.domain.HashTag;
+import com.starchive.springapp.hashtag.dto.HashTagDto;
 import com.starchive.springapp.hashtag.exception.HashTagNotFoundException;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.transaction.annotation.Transactional;
 
 @SpringBootTest
+@Transactional
 class HashTagServiceTest {
     @Autowired
     HashTagService hashTagService;
@@ -34,7 +37,7 @@ class HashTagServiceTest {
 
     @Test
     public void 해쉬태그_존재_여부_확인_없으면_저장_테스트() {
-        HashTag hashTag = hashTagService.findOneOrSave("DP");
-        assertThat(hashTag.getName()).isEqualTo("DP");
+        HashTagDto hashTagDto = hashTagService.findOneOrSave("DP");
+        assertThat(hashTagDto.getName()).isEqualTo("DP");
     }
 }

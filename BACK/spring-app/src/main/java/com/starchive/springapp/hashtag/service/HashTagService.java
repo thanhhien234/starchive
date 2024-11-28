@@ -1,6 +1,7 @@
 package com.starchive.springapp.hashtag.service;
 
 import com.starchive.springapp.hashtag.domain.HashTag;
+import com.starchive.springapp.hashtag.dto.HashTagDto;
 import com.starchive.springapp.hashtag.exception.HashTagNotFoundException;
 import com.starchive.springapp.hashtag.repository.HashTagRepository;
 import java.util.List;
@@ -23,18 +24,18 @@ public class HashTagService {
         return hashTagRepository.findByName(name).orElseThrow(HashTagNotFoundException::new);
     }
 
-    public List<HashTag> findAll() {
-        return hashTagRepository.findAll();
+    public List<HashTagDto> findAll() {
+        return hashTagRepository.findAll().stream().map(HashTagDto::from).toList();
     }
 
-    public HashTag findOneOrSave(String name) {
+    public HashTagDto findOneOrSave(String name) {
         HashTag hashTag = null;
         try {
             hashTag = findOne(name);
         } catch (HashTagNotFoundException e) {
             hashTag = save(name);
         }
-        return hashTag;
+        return HashTagDto.from(hashTag);
     }
 
 }
