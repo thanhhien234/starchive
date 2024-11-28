@@ -2,14 +2,13 @@ import CategoryNode from './components/CategoryNode';
 import cancelButton from '../../assets/icons/cancel-button.svg'
 import logoIcon from '../../assets/logo/logo.svg';
 import useAside from './useAside';
-import { Category } from './types/Category';
+import { Category } from './types/category';
 import {
   Wrapper,
   Overlay,
   Header,
   CloseButton,
   CategoryList,
-  TopCategoryItem,
   LogoWrapper,
 } from './Aside.style';
 
@@ -44,22 +43,20 @@ function Aside() {
           </LogoWrapper>
         </Header>
         <CategoryList>
-          <TopCategoryItem>
+          <CategoryNode
+            category={ALL_POSTS}
+            onSelect={handleCategorySelect}
+            activeCategoryId={activeCategoryId}
+          />
+          {category.map((topCategory: Category) => (
             <CategoryNode
-              category={ALL_POSTS}
+              key={topCategory.id}
+              category={topCategory}
               onSelect={handleCategorySelect}
               activeCategoryId={activeCategoryId}
             />
-          </TopCategoryItem>
-          {category.map((topCategory: Category) => (
-            <TopCategoryItem key={topCategory.id}>
-              <CategoryNode
-                category={topCategory}
-                onSelect={handleCategorySelect}
-                activeCategoryId={activeCategoryId}
-              />
-            </TopCategoryItem>
-          ))}
+            ))
+          }
         </CategoryList>
       </Wrapper>
     </>

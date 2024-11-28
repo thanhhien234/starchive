@@ -6,6 +6,7 @@ export const CategoryButton = styled.button`
   background: none;
   border: none;
   cursor: pointer;
+  width: 100%;
   text-align: left;
   align-items: center;
 `;
@@ -59,8 +60,9 @@ export const CategoryToggleButton = styled.img<{ $isOpen: boolean }>`
   }}
 `;
 
-export const SubcategoryGroup = styled.div`
+export const SubCategoryGroup = styled.div`
   padding-left: 40px;
+  padding-top: 8px;
   display: flex;
   flex-direction: column;
   gap: 8px;
