@@ -7,6 +7,7 @@ import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -22,7 +23,7 @@ public class HashTagController {
         return ResponseEntity.ok(listResponseDto);
     }
 
-    @GetMapping("/hashtag")
+    @PostMapping("/hashtag")
     public ResponseEntity<ResponseDto<HashTagDto>> checkHashTag(@RequestParam("name") String name) {
         HashTagDto hashTagDto = hashTagService.findOneOrSave(name);
         return ResponseEntity.ok(new ResponseDto<>(hashTagDto));
