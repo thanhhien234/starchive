@@ -130,7 +130,6 @@ class CategoryTree {
   private name: string;
   private children: CategoryTree[] = [];
   private parent: CategoryTree;
-  private hierList: categoryResponse[] = [];
 
   public fillNode(id: bigint, name: string) {
     this.id = id;
@@ -146,29 +145,20 @@ class CategoryTree {
   }
 
   public getAllDescendantIds(): bigint[] {
-    const idList: bigint[] = [this.id];
-
-    this.children.forEach((child: CategoryTree) => {
-      idList.push(...child.getAllDescendantIds());
-    });
-
-    return idList;
+    return [
+      this.id,
+      ...this.children.flatMap((child) => child.getAllDescendantIds()),
+    ];
   }
 
   public getHierList(): categoryResponse[] {
-    if (this.hierList.length !== 0) {
-      return this.hierList;
-    }
-
-    if (!!this.parent) {
-      this.hierList.push(...this.parent.getHierList());
-    }
-
-    this.hierList.push({
-      categoryId: Number(this.id),
-      categoryName: this.name,
-    });
-
-    return this.hierList;
+    const list = this.parent ? this.parent.getHierList() : [];
+    return [
+      ...list,
+      {
+        categoryId: Number(this.id),
+        categoryName: this.name,
+      },
+    ];
   }
 }
