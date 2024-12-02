@@ -5,13 +5,14 @@ import { useState } from "react";
 import TagWrapper from "../../components/TagWrapper/TagWrapper";
 
 const Wrapper = styled.main`
-  max-width: 700px;
+  max-width: 1080px;
   padding: 30px 20px;
   margin: auto;
 `
 
 const PostItemContainer = styled.section`
   width: 100%;
+  max-width: 700px;
 `;
 
 const PagingButtonWrapper = styled.section`
@@ -36,7 +37,7 @@ const TagContainer = styled.section`
   display: flex;
   flex-direction: column;
   gap: 10px;
-  width: 300px;
+  width: calc(100% - 700px);
   @media screen and (max-width: 768px) {
     width: 100%;
   }
