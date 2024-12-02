@@ -1,6 +1,6 @@
 package com.starchive.springapp.category.controller;
 
-import com.starchive.springapp.category.dto.CategoryListTreeResponse;
+import com.starchive.springapp.category.dto.CategoryDto;
 import com.starchive.springapp.category.service.CategoryService;
 import com.starchive.springapp.global.dto.ResponseDto;
 import com.starchive.springapp.hashtag.dto.HashTagDto;
@@ -23,8 +23,10 @@ public class CategoryController {
 
     @GetMapping("/categorys")
     @Operation(summary = "카테고리 목록 전체 조회")
-    public CategoryListTreeResponse showCategories() {
-        return categoryService.findAll();
+    public ResponseEntity<ResponseDto<List<CategoryDto>>> showCategories() {
+        List<CategoryDto> categorys = categoryService.findAll();
+        ResponseDto<List<CategoryDto>> listResponseDto = new ResponseDto<>(categorys);
+        return ResponseEntity.ok(listResponseDto);
     }
 
     @GetMapping("/categorys/{categoryId}/hashtags")
