@@ -13,7 +13,7 @@ import {
 } from './Aside.style';
 
 const ALL_POSTS = {
-  id: 0,
+  id: undefined,
   name: "Posts",
   children: []
 }
@@ -48,7 +48,7 @@ function Aside() {
             onSelect={handleCategorySelect}
             activeCategoryId={activeCategoryId}
           />
-          {category.map((topCategory: Category) => (
+          {category?.map((topCategory: Category) => (
             <CategoryNode
               key={topCategory.id}
               category={topCategory}

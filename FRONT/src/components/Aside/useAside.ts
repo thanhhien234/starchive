@@ -2,13 +2,14 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import category from './category.example.json';
 import useAsideStore from '../../store/useAsideStore';
+import { CategoryId } from '../../types/category';
 
 function useAside() {
   const navigate = useNavigate();
   const { isAsideOpen, setIsAsideOpen } = useAsideStore();
-  const [activeCategoryId, setActiveCategoryId] = useState<number | undefined>(undefined);
+  const [activeCategoryId, setActiveCategoryId] = useState<CategoryId>(undefined);
 
-  const handleCategorySelect = (categoryId: number) => {
+  const handleCategorySelect = (categoryId: CategoryId) => {
     setActiveCategoryId(categoryId);
     navigate(`posts/${categoryId}`);
     setIsAsideOpen(false);

@@ -1,5 +1,7 @@
+export type CategoryId = number | undefined;
+
 export interface Category {
-  id: number;
+  id: CategoryId;
   name: string;
   children: Category[];
 }
