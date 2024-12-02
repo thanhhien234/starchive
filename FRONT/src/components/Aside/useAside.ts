@@ -15,7 +15,11 @@ function useAside() {
 
   const handleCategorySelect = (categoryId: CategoryId) => {
     setActiveCategoryId(categoryId);
-    navigate(`posts/${categoryId}`);
+    navigate(
+      categoryId
+        ? `/posts/1/categoryId=${categoryId}`
+        : `/posts/1`
+    );
     setIsAsideOpen(false);
   };
 
