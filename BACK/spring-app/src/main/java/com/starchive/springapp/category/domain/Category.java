@@ -1,8 +1,9 @@
 package com.starchive.springapp.category.domain;
 
+import static jakarta.persistence.FetchType.LAZY;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
@@ -25,14 +26,14 @@ public class Category {
     @Column(name = "categoryId")
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "parentId")
     private Category parent;
 
     @Column(length = 100)
     String name;
 
-    @OneToMany(mappedBy = "parent", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "parent", fetch = LAZY)
     private List<Category> children = new ArrayList<>();
 
     public Category(String name, Category parent) {
