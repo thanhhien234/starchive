@@ -11,7 +11,7 @@ function useAside() {
   const { isAsideOpen, setIsAsideOpen } = useAsideStore();
   const [activeCategoryId, setActiveCategoryId] = useState<CategoryId>(undefined);
   const { data } = useQuery<ApiResponse<Category[]>>({ queryKey: ['categories'], queryFn: () => fetchCategories()});
-  const category = data?.data;
+  const categories = data?.data;
 
   const handleCategorySelect = (categoryId: CategoryId) => {
     setActiveCategoryId(categoryId);
@@ -23,7 +23,7 @@ function useAside() {
   const handleCloseAside = () => setIsAsideOpen(false);
 
   return {
-    category,
+    categories,
     isAsideOpen,
     activeCategoryId,
     handleCategorySelect,

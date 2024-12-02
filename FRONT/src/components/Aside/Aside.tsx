@@ -20,7 +20,7 @@ const ALL_POSTS = {
 
 function Aside() {
   const {
-    category,
+    categories,
     activeCategoryId,
     isAsideOpen,
     handleCategorySelect,
@@ -48,7 +48,7 @@ function Aside() {
             onSelect={handleCategorySelect}
             activeCategoryId={activeCategoryId}
           />
-          {category?.map((topCategory: Category) => (
+          {categories?.map((topCategory: Category) => (
             <CategoryNode
               key={topCategory.id}
               category={topCategory}
