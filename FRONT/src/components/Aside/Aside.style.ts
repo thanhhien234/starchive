@@ -58,12 +58,7 @@ export const CategoryList = styled.ul`
   list-style: none;
   display: flex;
   flex-direction: column;
-  gap: 8px;
-`;
-
-export const TopCategoryItem = styled.li`
-  padding: 8px;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
+  gap: 24px;
+  padding: 8px 0;
+  margin: 0;
 `;
