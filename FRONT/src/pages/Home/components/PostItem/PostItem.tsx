@@ -17,14 +17,27 @@ interface PostItemProps {
   content: string,
   createdAt: string,
   userName: string,
-  userIntro: string
+  userIntro: string,
+  categoryHier: [
+    { 
+      categoryId: number, 
+      categoryName: string 
+    }
+  ]
 }
 
-function PostItem({ title, content, createdAt, userName, userIntro }: PostItemProps) {
+function PostItem({ title, content, createdAt, userName, userIntro, categoryHier }: PostItemProps) {
   return (
     <Wrapper>
       <TagContainer>
-        Software Engineering &gt; CI/CD
+        {
+          categoryHier?.map(({ categoryId, categoryName }, i) => 
+            <>
+              {i !== 0 ? <span> &gt; </span> : null}
+              <Link to={`/posts/${categoryId}`}>{categoryName}</Link>
+            </>
+          )
+        }
       </TagContainer>
       <Link to="#">
         <Title>{ title }</Title>

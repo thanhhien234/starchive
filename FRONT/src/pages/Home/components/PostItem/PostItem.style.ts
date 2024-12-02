@@ -70,4 +70,9 @@ export const Content = styled.p`
 
 export const TagContainer = styled.span`
   color: var(--point-color);
+
+  & > a {
+    color: var(--point-color);
+    text-decoration: none;
+  }
 `
