@@ -5,7 +5,12 @@ import { PrismaService } from 'src/prisma/prisma.service';
 export class PostService {
   constructor(private readonly prisma: PrismaService) {}
 
-  async getPosts(categoryId: bigint | null, hashTagId: bigint | null) {
+  async getPosts(
+    categoryId: bigint | null,
+    hashTagId: bigint | null,
+    page: number = 1,
+    pageSize: number = 10,
+  ) {
     const categoryTreeMap = await this.makeCategoryTreeMap();
 
     let queryingObject = {
@@ -17,6 +22,8 @@ export class PostService {
         },
       },
       where: {},
+      skip: (page - 1) * pageSize,
+      take: pageSize,
     };
 
     if (categoryId) {
@@ -41,9 +48,12 @@ export class PostService {
       };
     }
 
-    const posts = await this.prisma.post.findMany(queryingObject);
+    const [posts, totalCount] = await Promise.all([
+      this.prisma.post.findMany(queryingObject),
+      this.prisma.post.count({ where: queryingObject.where }),
+    ]);
 
-    return this.toResponse(posts, categoryTreeMap);
+    return this.toResponse(posts, categoryTreeMap, page, pageSize, totalCount);
   }
 
   private toResponse(
@@ -68,25 +78,35 @@ export class PostService {
       createAt: Date;
     })[],
     categoryTreeMap: Map<BigInt, CategoryTree>,
+    page: number,
+    pageSize: number,
+    totalCount: number,
   ) {
-    return posts.map((post) => {
-      const categoryTree: CategoryTree = categoryTreeMap.get(post.categoryId);
+    const totalPages = Math.ceil(totalCount / pageSize);
 
-      const hierList: categoryResponse[] = categoryTree.getHierList();
+    return {
+      currentPage: page,
+      totalPages: totalPages,
+      totalCount: totalCount,
+      posts: posts.map((post) => {
+        const categoryTree: CategoryTree = categoryTreeMap.get(post.categoryId);
 
-      return {
-        categoryHier: hierList,
-        postId: Number(post.postId),
-        author: post.author,
-        title: post.title,
-        content: post.content.slice(0, 350),
-        createdAt: post.createAt,
-        hashTags: post.postHashTags.map(({ hashTag }) => ({
-          hashTagId: Number(hashTag.hashTagId),
-          name: hashTag.name,
-        })),
-      };
-    });
+        const hierList: categoryResponse[] = categoryTree.getHierList();
+
+        return {
+          categoryHier: hierList,
+          postId: Number(post.postId),
+          author: post.author,
+          title: post.title,
+          content: post.content.slice(0, 350),
+          createdAt: post.createAt,
+          hashTags: post.postHashTags.map(({ hashTag }) => ({
+            hashTagId: Number(hashTag.hashTagId),
+            name: hashTag.name,
+          })),
+        };
+      }),
+    };
   }
 
   private async makeCategoryTreeMap() {
