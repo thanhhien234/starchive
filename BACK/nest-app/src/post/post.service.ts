@@ -5,32 +5,70 @@ import { PrismaService } from 'src/prisma/prisma.service';
 export class PostService {
   constructor(private readonly prisma: PrismaService) {}
 
-  async getPostsByCategory(categoryId: bigint) {
+  async getPosts(
+    categoryId: bigint | null,
+    hashTagId: bigint | null,
+    page: number = 1,
+    pageSize: number = 10,
+  ) {
     const categoryTreeMap = await this.makeCategoryTreeMap();
 
-    const searchCategory: CategoryTree = categoryTreeMap.get(categoryId);
+    let queryingObject = {
+      include: {
+        postHashTags: {
+          include: {
+            hashTag: true,
+          },
+        },
+      },
+      where: {},
+      skip: (page - 1) * pageSize,
+      take: pageSize,
+    };
 
-    const posts = await this.prisma.post.findMany({
-      where: {
+    if (categoryId) {
+      const searchCategory: CategoryTree = categoryTreeMap.get(categoryId);
+
+      queryingObject.where = {
+        ...queryingObject.where,
         categoryId: {
           in: searchCategory?.getAllDescendantIds() ?? [],
         },
-      },
-    });
+      };
+    }
 
-    return this.toResponse(posts, categoryTreeMap);
-  }
+    if (hashTagId) {
+      queryingObject.where = {
+        ...queryingObject.where,
+        postHashTags: {
+          some: {
+            hashTagId: hashTagId,
+          },
+        },
+      };
+    }
 
-  public async getAllPosts() {
-    const categoryTreeMap = await this.makeCategoryTreeMap();
+    const [posts, totalCount] = await Promise.all([
+      this.prisma.post.findMany(queryingObject),
+      this.prisma.post.count({ where: queryingObject.where }),
+    ]);
 
-    const posts = await this.prisma.post.findMany();
-
-    return this.toResponse(posts, categoryTreeMap);
+    return this.toResponse(posts, categoryTreeMap, page, pageSize, totalCount);
   }
 
   private toResponse(
-    posts: {
+    posts: ({
+      postHashTags: ({
+        hashTag: {
+          name: string;
+          hashTagId: bigint;
+        };
+      } & {
+        postId: bigint;
+        postHashTagId: bigint;
+        hashTagId: bigint;
+      })[];
+    } & {
       postId: bigint;
       categoryId: bigint;
       title: string;
@@ -38,23 +76,37 @@ export class PostService {
       author: string;
       password: string;
       createAt: Date;
-    }[],
+    })[],
     categoryTreeMap: Map<BigInt, CategoryTree>,
+    page: number,
+    pageSize: number,
+    totalCount: number,
   ) {
-    return posts.map((post) => {
-      const categoryTree: CategoryTree = categoryTreeMap.get(post.categoryId);
+    const totalPages = Math.ceil(totalCount / pageSize);
 
-      const hierList: categoryResponse[] = categoryTree.getHierList();
+    return {
+      currentPage: page,
+      totalPages: totalPages,
+      totalCount: totalCount,
+      posts: posts.map((post) => {
+        const categoryTree: CategoryTree = categoryTreeMap.get(post.categoryId);
 
-      return {
-        categoryHier: hierList,
-        postId: Number(post.postId),
-        author: post.author,
-        title: post.title,
-        content: post.content.slice(0, 350),
-        createdAt: post.createAt,
-      };
-    });
+        const hierList: categoryResponse[] = categoryTree.getHierList();
+
+        return {
+          categoryHier: hierList,
+          postId: Number(post.postId),
+          author: post.author,
+          title: post.title,
+          content: post.content.slice(0, 350),
+          createdAt: post.createAt,
+          hashTags: post.postHashTags.map(({ hashTag }) => ({
+            hashTagId: Number(hashTag.hashTagId),
+            name: hashTag.name,
+          })),
+        };
+      }),
+    };
   }
 
   private async makeCategoryTreeMap() {
@@ -98,7 +150,6 @@ class CategoryTree {
   private name: string;
   private children: CategoryTree[] = [];
   private parent: CategoryTree;
-  private hierList: categoryResponse[] = [];
 
   public fillNode(id: bigint, name: string) {
     this.id = id;
@@ -114,29 +165,20 @@ class CategoryTree {
   }
 
   public getAllDescendantIds(): bigint[] {
-    const idList: bigint[] = [this.id];
-
-    this.children.forEach((child: CategoryTree) => {
-      idList.push(...child.getAllDescendantIds());
-    });
-
-    return idList;
+    return [
+      this.id,
+      ...this.children.flatMap((child) => child.getAllDescendantIds()),
+    ];
   }
 
   public getHierList(): categoryResponse[] {
-    if (this.hierList.length !== 0) {
-      return this.hierList;
-    }
-
-    if (!!this.parent) {
-      this.hierList.push(...this.parent.getHierList());
-    }
-
-    this.hierList.push({
-      categoryId: Number(this.id),
-      categoryName: this.name,
-    });
-
-    return this.hierList;
+    const list = this.parent ? this.parent.getHierList() : [];
+    return [
+      ...list,
+      {
+        categoryId: Number(this.id),
+        categoryName: this.name,
+      },
+    ];
   }
 }
