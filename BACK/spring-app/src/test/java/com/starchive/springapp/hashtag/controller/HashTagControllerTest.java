@@ -9,8 +9,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.starchive.springapp.hashtag.domain.HashTag;
+import com.starchive.springapp.hashtag.dto.HashTagCheckRequest;
 import com.starchive.springapp.hashtag.dto.HashTagDto;
-import com.starchive.springapp.hashtag.dto.HashTagRequest;
 import com.starchive.springapp.hashtag.service.HashTagService;
 import java.util.Arrays;
 import java.util.List;
@@ -56,7 +56,7 @@ class HashTagControllerTest {
         HashTagDto mockTag = HashTagDto.from(new HashTag("Spring"));
         when(hashTagService.findOneOrSave(anyString())).thenReturn(mockTag);
 
-        HashTagRequest request = new HashTagRequest("Spring");
+        HashTagCheckRequest request = new HashTagCheckRequest("Spring");
 
         // when & then
         mockMvc.perform(post("/hashtag")
@@ -69,7 +69,7 @@ class HashTagControllerTest {
     @Test
     public void 해쉬태그_이름이_빈문자열인경우_예외발생() throws Exception {
         // Given
-        HashTagRequest request = new HashTagRequest(""); // name이 빈 문자열
+        HashTagCheckRequest request = new HashTagCheckRequest(""); // name이 빈 문자열
 
         // When & Then
         mockMvc.perform(post("/hashtag")
@@ -83,7 +83,7 @@ class HashTagControllerTest {
     public void 해쉬태그_이름이_길이가_32자를_초과한경우_예외발생() throws Exception {
         // Given
         String longName = "a".repeat(33); // 33글자 문자열
-        HashTagRequest request = new HashTagRequest(longName);
+        HashTagCheckRequest request = new HashTagCheckRequest(longName);
 
         // When & Then
         mockMvc.perform(post("/hashtag")

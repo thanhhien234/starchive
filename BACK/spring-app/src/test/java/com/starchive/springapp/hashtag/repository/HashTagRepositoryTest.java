@@ -4,8 +4,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import com.starchive.springapp.category.domain.Category;
 import com.starchive.springapp.hashtag.domain.HashTag;
-import com.starchive.springapp.post.Post;
-import com.starchive.springapp.posthashtag.PostHashTag;
+import com.starchive.springapp.post.domain.Post;
+import com.starchive.springapp.posthashtag.domain.PostHashTag;
 import jakarta.persistence.EntityManager;
 import java.time.LocalDateTime;
 import java.util.List;
