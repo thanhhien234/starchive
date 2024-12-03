@@ -1,9 +1,13 @@
 package com.starchive.springapp.hashtag.controller;
 
 import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -11,6 +15,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.starchive.springapp.hashtag.domain.HashTag;
 import com.starchive.springapp.hashtag.dto.HashTagCheckRequest;
 import com.starchive.springapp.hashtag.dto.HashTagDto;
+import com.starchive.springapp.hashtag.dto.HashTagUpdateRequest;
 import com.starchive.springapp.hashtag.service.HashTagService;
 import java.util.Arrays;
 import java.util.List;
@@ -91,5 +96,38 @@ class HashTagControllerTest {
                         .content(objectMapper.writeValueAsString(request)))
                 .andExpect(status().isBadRequest()) // 400 Bad Request
                 .andExpect(jsonPath("$.name").value("해쉬태그이름은 32자 보다 작거나 같아야 합니다.")); // 에러 메시지 검증
+    }
+
+    @Test
+    void 해시태그_이름_수정_API_테스트() throws Exception {
+        // Given
+        Long hashTagId = 1L;
+        String updatedName = "UpdatedName";
+        HashTagDto mockResponse = new HashTagDto(hashTagId, updatedName);
+
+        HashTagUpdateRequest request = new HashTagUpdateRequest(hashTagId, updatedName);
+
+        when(hashTagService.updateName(eq(hashTagId), eq(updatedName))).thenReturn(mockResponse);
+
+        /// When & Then
+        mockMvc.perform(put("/hashtag")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(request))) // 요청 데이터 변환
+                .andExpect(status().isOk()) // 200 상태 코드 확인
+                .andExpect(jsonPath("$.data.id").value(hashTagId)) // 응답 ID 확인
+                .andExpect(jsonPath("$.data.name").value(updatedName)); // 응답 이름 확인
+    }
+
+    @Test
+    void 해시태그_삭제_API_테스트() throws Exception {
+        // Given
+        Long hashTagId = 1L;
+
+        doNothing().when(hashTagService).delete(eq(hashTagId));
+
+        // When & Then
+        mockMvc.perform(delete("/hashtag")
+                        .param("hashTagId", hashTagId.toString()))
+                .andExpect(status().isNoContent()); // 204 상태 코드 확인
     }
 }

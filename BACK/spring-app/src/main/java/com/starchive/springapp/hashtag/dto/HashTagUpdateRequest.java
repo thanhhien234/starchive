@@ -2,15 +2,18 @@ package com.starchive.springapp.hashtag.dto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
 @AllArgsConstructor
+@NoArgsConstructor
 public class HashTagUpdateRequest {
     @Schema(description = "해시태그 식별 id", example = "1")
-    @NotEmpty(message = "해시태그 식별 ID를 입력해주세요.")
+    @NotNull(message = "ID는 필수입니다.") // Long 타입에는 @NotNull 사용
     private long id;
 
     @Schema(description = "해시태그 이름", example = "Spring", maxLength = 32)
