@@ -54,13 +54,13 @@ class CategoryControllerTest {
         mockMvc.perform(get("/categorys")
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.roots").isArray())
-                .andExpect(jsonPath("$.roots[0].name").value("알고리즘"))
-                .andExpect(jsonPath("$.roots[0].children").isArray())
-                .andExpect(jsonPath("$.roots[0].children[0].name").value("자료구조"))
-                .andExpect(jsonPath("$.roots[0].children[1].name").value("다이나믹프로그래밍"))
-                .andExpect(jsonPath("$.roots[1].name").value("프로젝트"))
-                .andExpect(jsonPath("$.roots[1].children[0].name").value("요구사항"));
+                .andExpect(jsonPath("$.data").isArray())
+                .andExpect(jsonPath("$.data[0].name").value("알고리즘"))
+                .andExpect(jsonPath("$.data[0].children").isArray())
+                .andExpect(jsonPath("$.data[0].children[0].name").value("자료구조"))
+                .andExpect(jsonPath("$.data[0].children[1].name").value("다이나믹프로그래밍"))
+                .andExpect(jsonPath("$.data[1].name").value("프로젝트"))
+                .andExpect(jsonPath("$.data[1].children[0].name").value("요구사항"));
 
     }
 
