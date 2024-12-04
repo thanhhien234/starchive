@@ -2,7 +2,7 @@ import CategoryNode from './components/CategoryNode';
 import cancelButton from '../../assets/icons/cancel-button.svg'
 import logoIcon from '../../assets/logo/logo.svg';
 import useAside from './useAside';
-import { Category } from './types/category';
+import { Category } from '../../types/category';
 import {
   Wrapper,
   Overlay,
@@ -13,14 +13,14 @@ import {
 } from './Aside.style';
 
 const ALL_POSTS = {
-  id: 0,
+  id: undefined,
   name: "Posts",
   children: []
 }
 
 function Aside() {
   const {
-    category,
+    categories,
     activeCategoryId,
     isAsideOpen,
     handleCategorySelect,
@@ -48,7 +48,7 @@ function Aside() {
             onSelect={handleCategorySelect}
             activeCategoryId={activeCategoryId}
           />
-          {category.map((topCategory: Category) => (
+          {categories?.map((topCategory: Category) => (
             <CategoryNode
               key={topCategory.id}
               category={topCategory}
