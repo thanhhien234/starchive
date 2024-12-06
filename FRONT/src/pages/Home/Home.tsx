@@ -1,24 +1,33 @@
 import PostItem from "./components/PostItem/PostItem";
 import PagingButton from "@_components/PagingButton/PagingButton";
 import { useState } from "react";
-import { useQuery } from "@tanstack/react-query";
 import { PagingButtonWrapper, PostItemContainer, Wrapper } from "./Home.style";
-import { fetchPostList } from "../../services/postApi";
 import { Post } from "../../types/post";
-import { ApiResponse } from "../../services/api";
-// import TagWrapper from "../../components/TagWrapper/TagWrapper";
+import TagWrapper from "../../components/TagWrapper/TagWrapper";
+import { useTag } from "../../components/TagWrapper/useTag";
 
 function Home() {
   const [currentPage, setCurrentPage] = useState<number>(1);
-  // const tagList = ["Design Pattern", "Factory Pattern", "CI/CD", "DevOps", "Software Engineering","Design Pattern", "Factory Pattern", "CI/CD", "DevOps", "Software Engineering"];
+  const tagList = [
+    { id: 1, name: "Design Pattern" },
+    { id: 2, name: "Factory Pattern" },
+    { id: 3, name: "CI/CD" },
+    { id: 4, name: "DevOps" },
+    { id: 5, name: "Software Engineering" },
+  ];  
 
-  const { data } = useQuery<ApiResponse<Post[]>>({ queryKey: ['postData'], queryFn: () => fetchPostList() });
+  const { 
+    selectedTag,
+    posts, 
+    handleTagClick 
+  } = useTag();
 
   return (
     <Wrapper>
+      <TagWrapper tagList={tagList} onTagClick={handleTagClick} selectedTag={selectedTag}/>
       <PostItemContainer>
         {
-          data?.data.map((postItem: Post, i: number) => 
+          posts.map((postItem: Post, i: number) => 
             <PostItem 
               title={postItem.title}
               createdAt={postItem.createdAt}
