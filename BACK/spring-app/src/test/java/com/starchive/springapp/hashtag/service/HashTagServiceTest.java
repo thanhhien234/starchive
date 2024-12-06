@@ -7,6 +7,12 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import com.starchive.springapp.hashtag.domain.HashTag;
 import com.starchive.springapp.hashtag.dto.HashTagDto;
 import com.starchive.springapp.hashtag.exception.HashTagNotFoundException;
+import com.starchive.springapp.hashtag.repository.HashTagRepository;
+import com.starchive.springapp.post.domain.Post;
+import com.starchive.springapp.posthashtag.domain.PostHashTag;
+import com.starchive.springapp.posthashtag.repository.PostHashTagRepository;
+import jakarta.persistence.EntityManager;
+import java.time.LocalDateTime;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -17,6 +23,14 @@ import org.springframework.transaction.annotation.Transactional;
 class HashTagServiceTest {
     @Autowired
     HashTagService hashTagService;
+
+    @Autowired
+    EntityManager em;
+    @Autowired
+    private HashTagRepository hashTagRepository;
+
+    @Autowired
+    private PostHashTagRepository postHashTagRepository;
 
     @Test
     public void 해쉬태그_저장_테스트() throws Exception {
@@ -39,5 +53,44 @@ class HashTagServiceTest {
     public void 해쉬태그_존재_여부_확인_없으면_저장_테스트() {
         HashTagDto hashTagDto = hashTagService.findOneOrSave("DP");
         assertThat(hashTagDto.getName()).isEqualTo("DP");
+    }
+
+    @Test
+    public void 해쉬태그_이름_수정_테스트() throws Exception {
+        //given
+        HashTag hashTag = hashTagService.save("DP");
+
+        //when
+        hashTagService.updateName(hashTag.getId(), "다이나믹 프로그래밍");
+        HashTag findOne = hashTagService.findOne("다이나믹 프로그래밍");
+
+        //then
+        assertThat(findOne.getId()).isEqualTo(hashTag.getId());
+    }
+
+    @Test
+    public void 해쉬태그_삭제_테스트() throws Exception {
+        //given
+        Post post1 = Post.builder().title("타이틀1").author("content").password("1234").dateTime(LocalDateTime.now())
+                .build();
+        Post post2 = Post.builder().title("타이틀2").author("content").password("1234").dateTime(LocalDateTime.now())
+                .build();
+        HashTag hashTag1 = hashTagService.save("DP");
+        PostHashTag postHashTag1 = PostHashTag.builder().post(post1).hashTag(hashTag1).build();
+        PostHashTag postHashTag2 = PostHashTag.builder().post(post2).hashTag(hashTag1).build();
+        em.persist(post1);
+        em.persist(post2);
+        em.persist(postHashTag1);
+        em.persist(postHashTag2);
+        em.flush();
+        em.clear();
+
+        //when
+        hashTagService.delete(hashTag1.getId());
+
+        //then
+        assertThat(hashTagRepository.findByName("DP")).isEmpty();
+        assertThat(postHashTagRepository.findAllByHashTagId(hashTag1.getId())).isEmpty();
+
     }
 }

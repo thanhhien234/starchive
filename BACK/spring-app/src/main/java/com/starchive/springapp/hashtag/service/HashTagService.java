@@ -7,6 +7,7 @@ import com.starchive.springapp.hashtag.domain.HashTag;
 import com.starchive.springapp.hashtag.dto.HashTagDto;
 import com.starchive.springapp.hashtag.exception.HashTagNotFoundException;
 import com.starchive.springapp.hashtag.repository.HashTagRepository;
+import com.starchive.springapp.posthashtag.repository.PostHashTagRepository;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -18,6 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class HashTagService {
     private final HashTagRepository hashTagRepository;
     private final CategoryRepository categoryRepository;
+    private final PostHashTagRepository postHashTagRepository;
 
     public HashTag save(String name) {
         HashTag hashTag = new HashTag(name);
@@ -47,4 +49,16 @@ public class HashTagService {
 
         return hashTagRepository.findAllByCategoryId(category.getId()).stream().map(HashTagDto::from).toList();
     }
+
+    public HashTagDto updateName(Long hashTagId, String newName) {
+        HashTag hashTag = hashTagRepository.findById(hashTagId).orElseThrow(HashTagNotFoundException::new);
+        hashTag.changeName(newName);
+        return HashTagDto.from(hashTag);
+    }
+
+    public void delete(Long hashTagId) {
+        postHashTagRepository.deleteAllByHashTagId(hashTagId);
+        hashTagRepository.deleteById(hashTagId);
+    }
+
 }

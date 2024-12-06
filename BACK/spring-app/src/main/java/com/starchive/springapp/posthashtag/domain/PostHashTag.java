@@ -1,54 +1,40 @@
-package com.starchive.springapp.post;
+package com.starchive.springapp.posthashtag.domain;
 
 import static jakarta.persistence.FetchType.LAZY;
 
-import com.starchive.springapp.category.domain.Category;
+import com.starchive.springapp.hashtag.domain.HashTag;
+import com.starchive.springapp.post.domain.Post;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.Lob;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
-import java.time.LocalDateTime;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Getter
+@Table(name = "PostHashTag")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Builder
 @AllArgsConstructor
-@Table(name = "Posts")
-public class Post {
+public class PostHashTag {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "postId")
+    @Column(name = "postHashTagId")
     private Long id;
 
-    @Column(nullable = false, length = 64)
-    private String title;
-
-    @Lob
-    private String content;
-
-    @Column(nullable = false, length = 32)
-    private String author;
-
-    @Column(nullable = false, length = 128)
-    private String password;
-
-    @Column(nullable = false, name = "datetime")
-    private LocalDateTime dateTime;
+    @ManyToOne(fetch = LAZY)
+    @JoinColumn(name = "postId")
+    private Post post;
 
     @ManyToOne(fetch = LAZY)
-    @JoinColumn(name = "categoryId")
-    private Category category;
+    @JoinColumn(name = "hashTagId")
+    private HashTag hashTag;
 
 
 }

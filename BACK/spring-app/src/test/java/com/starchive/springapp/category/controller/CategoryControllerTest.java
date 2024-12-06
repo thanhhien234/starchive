@@ -7,8 +7,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import com.starchive.springapp.category.domain.Category;
 import com.starchive.springapp.category.repository.CategoryRepository;
 import com.starchive.springapp.hashtag.domain.HashTag;
-import com.starchive.springapp.post.Post;
-import com.starchive.springapp.posthashtag.PostHashTag;
+import com.starchive.springapp.post.domain.Post;
+import com.starchive.springapp.posthashtag.domain.PostHashTag;
 import jakarta.persistence.EntityManager;
 import java.time.LocalDateTime;
 import org.junit.jupiter.api.Test;
