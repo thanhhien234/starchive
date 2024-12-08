@@ -3,8 +3,8 @@ import PagingButton from "@_components/PagingButton/PagingButton";
 import { useState } from "react";
 import { PagingButtonWrapper, PostItemContainer, Wrapper } from "./Home.style";
 import { Post } from "../../types/post";
-import TagWrapper from "../../components/TagWrapper/TagWrapper";
-import { useTag } from "../../components/TagWrapper/useTag";
+import TagWrapper from "@_components/TagWrapper/TagWrapper";
+import { useTag } from "@_components/TagWrapper/useTag";
 import { useSearchParams } from "react-router-dom";
 
 function Home() {
