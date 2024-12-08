@@ -17,8 +17,8 @@ function useAside() {
     setActiveCategoryId(categoryId);
     navigate(
       categoryId
-        ? `/posts/1/categoryId=${categoryId}`
-        : `/posts/1`
+        ? `/1/categoryId=${categoryId}`
+        : `/`
     );
     setIsAsideOpen(false);
   };

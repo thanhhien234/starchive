@@ -11,7 +11,7 @@ function App() {
       <Aside />
       <Navbar />
       <Routes>
-        <Route path='/' element={<Home />} />
+        <Route path='/:page?' element={<Home />} />
       </Routes>
       <Footer />
     </>
