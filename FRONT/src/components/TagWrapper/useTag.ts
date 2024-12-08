@@ -13,7 +13,7 @@ interface UseTagParams {
 }
 
 export const useTag = ({ categoryId, pageSize, page }: UseTagParams = {}) => {
-  const [selectedTag, setSelectedTag] = useState<number | null>(null);
+  const [selectedTag, setSelectedTag] = useState<number | undefined>(undefined);
 
   const { data: tagList } = useQuery<ApiResponse<Tag[]>>({
     queryKey: categoryId ? ['tagList', categoryId] : ['tagList'],
@@ -32,14 +32,14 @@ export const useTag = ({ categoryId, pageSize, page }: UseTagParams = {}) => {
     queryFn: () => 
       fetchPostList({ 
         category: categoryId, 
-        tag: selectedTag || undefined, 
+        tag: selectedTag, 
         pageSize, 
         page 
       }),
   });
 
   const handleTagClick = (tagId: number) => {
-    const newSelectedTag = selectedTag === tagId ? null : tagId;
+    const newSelectedTag = selectedTag === tagId ? undefined : tagId;
     setSelectedTag(newSelectedTag);
   };
 

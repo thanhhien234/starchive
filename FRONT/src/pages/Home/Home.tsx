@@ -16,7 +16,7 @@ function Home() {
     selectedTag,
     posts, 
     handleTagClick 
-  } = useTag(categoryId);
+  } = useTag({ categoryId });
 
   return (
     <Wrapper>
