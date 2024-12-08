@@ -1,13 +1,19 @@
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { fetchPostList } from "../../services/postApi";
-import { fetchAllTagList, fetchPostsByTag, fetchTagListByCategory } from "../../services/tagApi";
+import { fetchAllTagList, fetchTagListByCategory } from "../../services/tagApi";
 import { Post } from "../../types/post";
 import { ApiResponse } from "../../services/api";
 import { Tag } from "../../types/tag";
 
-export const useTag = (categoryId?: number) => {
-  const [selectedTag, setSelectedTag] = useState<string | null>(null);
+interface UseTagParams {
+  categoryId?: number;
+  pageSize?: number;
+  page?: number;
+}
+
+export const useTag = ({ categoryId, pageSize, page }: UseTagParams = {}) => {
+  const [selectedTag, setSelectedTag] = useState<number | null>(null);
 
   const { data: tagList } = useQuery<ApiResponse<Tag[]>>({
     queryKey: categoryId ? ['tagList', categoryId] : ['tagList'],
@@ -15,19 +21,26 @@ export const useTag = (categoryId?: number) => {
       categoryId ? fetchTagListByCategory(categoryId) : fetchAllTagList(),
   });
 
-  const { data, refetch } = useQuery<ApiResponse<Post[]>>({
-    queryKey: selectedTag ? ["postData", selectedTag] : ["postData"],
-    queryFn: () =>
-      selectedTag ? fetchPostsByTag(selectedTag) : fetchPostList(), //태그가 선택되지 않았을 때는 fetchPostList()만 호출
+  const { data } = useQuery<ApiResponse<Post[]>>({
+    queryKey: [
+      "postData", 
+      categoryId, 
+      selectedTag, 
+      pageSize || 10, 
+      page || 1
+    ],
+    queryFn: () => 
+      fetchPostList({ 
+        category: categoryId, 
+        tag: selectedTag || undefined, 
+        pageSize, 
+        page 
+      }),
   });
 
-  const handleTagClick = (tagName: string) => {
-    const newSelectedTag = selectedTag === tagName ? null : tagName;
+  const handleTagClick = (tagId: number) => {
+    const newSelectedTag = selectedTag === tagId ? null : tagId;
     setSelectedTag(newSelectedTag);
-
-    if (newSelectedTag) {
-      refetch();
-    }
   };
 
   return {
