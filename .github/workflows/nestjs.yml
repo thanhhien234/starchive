@@ -1,0 +1,45 @@
+name: NestJS CI
+
+on:
+  pull_request:
+    branches: 
+      - develop
+    paths:  
+      - 'BACK/nest-app/**'
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+
+    steps:
+    # 1. 코드 체크아웃
+    - uses: actions/checkout@v4
+
+    # 2. Node.js 설정
+    - name: Set up Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '22' # 사용하려는 Node.js 버전
+        cache: 'npm'
+        cache-dependency-path: 'BACK/nest-app/package-lock.json'
+
+    # 3. 의존성 설치
+    - name: Install dependencies
+      run: |
+        cd BACK/nest-app/
+        npm install
+
+    # 4. NestJS 빌드
+    - name: Build the project
+      run: |
+        cd BACK/nest-app/
+        npm run build
+
+    # 5. 테스트 실행
+    #- name: Run tests
+    #  run: |
+    #    cd BACK/nest-app/
+    #    npm run test
