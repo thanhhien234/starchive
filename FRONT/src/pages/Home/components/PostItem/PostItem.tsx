@@ -20,12 +20,10 @@ interface PostItemProps {
   createdAt: string,
   userName: string,
   userIntro: string,
-  categoryHier: [
-    { 
-      categoryId: number, 
-      categoryName: string 
-    }
-  ],
+  categoryHier:{
+      categoryId: number,
+      categoryName: string
+  }[],
   hashTags: {
     hashTagId: number,
     name: string
