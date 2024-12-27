@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import { 
   Content, 
+  HashTagContainer, 
   SubInfo, 
   TagContainer, 
   Title, 
@@ -11,6 +12,7 @@ import {
   UserProfileWrapper, 
   Wrapper } 
   from './PostItem.style';
+import { Tag } from '../../../../components/TagWrapper/TagWrapper.style';
 
 interface PostItemProps {
   title: string,
@@ -23,10 +25,14 @@ interface PostItemProps {
       categoryId: number, 
       categoryName: string 
     }
-  ]
+  ],
+  hashTags: {
+    hashTagId: number,
+    name: string
+  }[]
 }
 
-function PostItem({ title, content, createdAt, userName, userIntro, categoryHier }: PostItemProps) {
+function PostItem({ title, content, createdAt, userName, userIntro, categoryHier, hashTags }: PostItemProps) {
   return (
     <Wrapper>
       <TagContainer>
@@ -57,6 +63,11 @@ function PostItem({ title, content, createdAt, userName, userIntro, categoryHier
       <Link to="#">
         <Content>{ content }</Content>
       </Link>
+      <HashTagContainer>
+        {hashTags.map(tag => (
+          <Tag key={tag.hashTagId} $isSelected={false}>{ '#' + tag.name }</Tag>
+        ))}
+      </HashTagContainer>
     </Wrapper>
   )
 }

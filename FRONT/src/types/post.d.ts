@@ -9,5 +9,9 @@ export interface Post {
   title: string,
   author: string,
   createdAt: string,
-  content: string
+  content: string,
+  hashTags: {
+    hashTagId: number,
+    name: string
+  }[]
 }

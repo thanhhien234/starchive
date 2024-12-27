@@ -76,3 +76,8 @@ export const TagContainer = styled.span`
     text-decoration: none;
   }
 `
+
+export const HashTagContainer = styled.div`
+  display: flex;
+  gap: 5px;
+`;
