@@ -2,11 +2,11 @@ import styled from "styled-components";
 
 export const CategorySelectorContainer = styled.div`
   position: relative;
-  width: 180px;
+  margin-left: auto;
+  width: 212px;
 `;
 
 export const CategorySelect = styled.div`
-  width: 100%;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -16,13 +16,17 @@ export const CategorySelect = styled.div`
   cursor: pointer;
   background-color: #fff;
   font-size: 16px;
+  width: 100%;
+  box-sizing: border-box;
 `;
 
 export const DropdownList = styled.ul`
   position: absolute;
   top: 35px;
-  width: 180px;
   height: auto;
+  left: 0;
+  width: 100%;
+  box-sizing: border-box;
   border: 1px solid #000;
   background-color: #fff;
   z-index: 100;
