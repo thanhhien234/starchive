@@ -12,34 +12,28 @@ import {
 import { Category } from "@_types/category";
 
 function CategorySelector({ categories }: { categories: Category[] }) {
+  const [selectedCategory, setSelectedCategory] = useState<Category | null>(null);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  const [selectedItemId, setSelectedItemId] = useState<number | null>(null);
 
-  const getSelectedCategoryName = (id: number | null) => {
-    if (!id) return "카테고리 선택";
-    const category = categories.find((cat) => cat.id === id);
-    return category ? category.name : "카테고리 선택";
-  };
-
-  const handleSelect = (id: number) => {
-    setSelectedItemId(id);
+  const handleSelect = (category: Category) => {
+    setSelectedCategory(category);
     setIsDropdownOpen(false);
-    console.log(id);
+    console.log(category.id);
   };
 
   return (
     <CategorySelectorContainer>
       <CategorySelect onClick={() => setIsDropdownOpen(!isDropdownOpen)}>
-        {getSelectedCategoryName(selectedItemId)}
-        <img src={dropdownArrow} />
+        {selectedCategory?.name || "카테고리 선택"}
+        <img src={dropdownArrow} alt="Dropdown Arrow" />
       </CategorySelect>
 
       {isDropdownOpen && (
         <DropdownList>
           {categories.map((category) => (
             <CategoryItem key={category.id}>
-              <BigCategory onClick={() => handleSelect(category.id)}>
-                <img src={dropdownArrow} />
+              <BigCategory onClick={() => handleSelect(category)}>
+                <img src={dropdownArrow} alt="Dropdown Arrow" />
                 {category.name}
               </BigCategory>
               {category.children && (
@@ -47,7 +41,7 @@ function CategorySelector({ categories }: { categories: Category[] }) {
                   {category.children.map((sub: Category) => (
                     <SubCategoryItem
                       key={sub.id}
-                      onClick={() => handleSelect(sub.id)}
+                      onClick={() => handleSelect(sub)}
                     >
                       - {sub.name}
                     </SubCategoryItem>
