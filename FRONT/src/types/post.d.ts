@@ -1,13 +1,15 @@
 export interface Post {
-  categoryHier: [
-    { 
-      categoryId: number, 
-      categoryName: string 
-    }
-  ],
+  categoryHier: {
+      categoryId: number,
+      categoryName: string
+  }[]
   postId: number,
   title: string,
   author: string,
   createdAt: string,
-  content: string
+  content: string,
+  hashTags: {
+    hashTagId: number,
+    name: string
+  }[]
 }

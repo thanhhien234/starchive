@@ -32,6 +32,7 @@ function Home() {
               userName={postItem.author}
               userIntro="어쩌구 저쩌구 개발자입니다."
               categoryHier={postItem.categoryHier}
+              hashTags={postItem.hashTags}
               key={i}
             />
           )
