@@ -2,6 +2,7 @@ package com.starchive.springapp.image.service;
 
 import com.starchive.springapp.S3Service;
 import com.starchive.springapp.image.domain.PostImage;
+import com.starchive.springapp.image.dto.PostImageDto;
 import com.starchive.springapp.image.repository.PostImageRepository;
 import java.net.URI;
 import java.time.LocalDateTime;
@@ -21,7 +22,7 @@ public class PostImageService {
     private final S3Service s3Service;
     private final PostImageRepository postImageRepository;
 
-    public String uploadImage(MultipartFile image) {
+    public PostImageDto uploadImage(MultipartFile image) {
         String imagePath = s3Service.saveFile(image);
         PostImage postImage = PostImage.builder()
                 .imagePath(imagePath)
@@ -30,7 +31,7 @@ public class PostImageService {
 
         postImageRepository.save(postImage);
 
-        return imagePath;
+        return new PostImageDto(postImage.getId(), postImage.getImagePath());
     }
 
     @Scheduled(cron = "0 0 2 * * ?")
