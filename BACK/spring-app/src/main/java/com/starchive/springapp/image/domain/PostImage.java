@@ -33,4 +33,8 @@ public class PostImage {
     @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "postId")
     Post post;
+
+    public void setPost(Post post) {
+        this.post = post;
+    }
 }

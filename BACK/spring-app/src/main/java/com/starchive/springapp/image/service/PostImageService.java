@@ -3,6 +3,7 @@ package com.starchive.springapp.image.service;
 import com.starchive.springapp.image.domain.PostImage;
 import com.starchive.springapp.image.dto.PostImageDto;
 import com.starchive.springapp.image.repository.PostImageRepository;
+import com.starchive.springapp.post.domain.Post;
 import com.starchive.springapp.s3.S3Service;
 import java.net.URI;
 import java.time.LocalDateTime;
@@ -34,6 +35,13 @@ public class PostImageService {
         return new PostImageDto(postImage.getId(), postImage.getImagePath());
     }
 
+    public void setPost(List<Long> imageIds, Post post) {
+        List<PostImage> postImages = postImageRepository.findManyByIdIn(imageIds);
+        postImages.forEach(postImage -> {
+            postImage.setPost(post);
+        });
+    }
+
     @Scheduled(cron = "0 0 2 * * ?")
     public void deleteOldOrphanedPostImages() {
         LocalDateTime cutoffDate = LocalDateTime.now().minusDays(1); // 하루 전
@@ -51,4 +59,5 @@ public class PostImageService {
         URI uri = URI.create(url);
         return uri.getPath().substring(1); // 첫 번째 '/' 제거
     }
+
 }

@@ -3,6 +3,7 @@ package com.starchive.springapp.post.domain;
 import static jakarta.persistence.FetchType.LAZY;
 
 import com.starchive.springapp.category.domain.Category;
+import com.starchive.springapp.post.dto.PostCreateRequest;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -44,11 +45,26 @@ public class Post {
     private String password;
 
     @Column(nullable = false, name = "datetime")
-    private LocalDateTime dateTime;
+    private LocalDateTime createAt;
 
     @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "categoryId")
     private Category category;
+
+    public static Post from(PostCreateRequest request) {
+        Post post = new Post();
+        post.title = request.getTitle();
+        post.content = request.getContent();
+        post.author = request.getAuthor();
+        post.password = request.getPassword();
+        post.createAt = LocalDateTime.now();
+
+        return post;
+    }
+
+    public void changeCategory(Category category) {
+        this.category = category;
+    }
 
 
 }
