@@ -1,4 +1,4 @@
-package com.starchive.springapp;
+package com.starchive.springapp.s3;
 
 import com.amazonaws.auth.AWSCredentials;
 import com.amazonaws.auth.AWSStaticCredentialsProvider;
@@ -8,8 +8,10 @@ import com.amazonaws.services.s3.AmazonS3ClientBuilder;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 
 @Configuration
+@Profile("!test")
 public class S3Config {
     @Value("${cloud.aws.credentials.access-key}")
     private String accessKey;

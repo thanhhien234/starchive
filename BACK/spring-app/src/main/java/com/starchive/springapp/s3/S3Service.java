@@ -1,4 +1,4 @@
-package com.starchive.springapp;
+package com.starchive.springapp.s3;
 
 import com.amazonaws.SdkClientException;
 import com.amazonaws.services.s3.AmazonS3;
@@ -31,7 +31,7 @@ public class S3Service {
     public String saveFile(MultipartFile file) {
         String randomFilename = generateRandomFilename(file);
 
-        log.info("File upload started: " + randomFilename);
+        log.info("File upload started: {}, bucketName: {}", randomFilename, bucket);
 
         ObjectMetadata metadata = new ObjectMetadata();
         metadata.setContentLength(file.getSize());

@@ -51,7 +51,7 @@ class CategoryControllerTest {
         categoryRepository.save(child3);
 
         // when
-        mockMvc.perform(get("/categorys")
+        mockMvc.perform(get("/categories")
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.data").isArray())
@@ -98,7 +98,7 @@ class CategoryControllerTest {
         entityManager.persist(postHashTag2);
 
         // When & Then
-        mockMvc.perform(get("/categorys/{categoryId}/hashtags", category.getId())
+        mockMvc.perform(get("/categories/{categoryId}/hashtags", category.getId())
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.data").isArray())

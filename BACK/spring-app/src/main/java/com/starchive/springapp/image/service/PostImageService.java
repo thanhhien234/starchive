@@ -1,9 +1,9 @@
 package com.starchive.springapp.image.service;
 
-import com.starchive.springapp.S3Service;
 import com.starchive.springapp.image.domain.PostImage;
 import com.starchive.springapp.image.dto.PostImageDto;
 import com.starchive.springapp.image.repository.PostImageRepository;
+import com.starchive.springapp.s3.S3Service;
 import java.net.URI;
 import java.time.LocalDateTime;
 import java.util.List;
