@@ -1,12 +1,12 @@
 import styled from "styled-components";
 
 export const CreatePostContainer = styled.div`
-  background-color: #f8f9f9;
   display: flex;
   flex-direction: column;
   padding: 30px 20px;
   margin: auto;
   gap: 20px;
+  max-width: 1080px;
 `;
 
 export const PostTitleInput = styled.input`
@@ -19,4 +19,10 @@ export const PostTitleInput = styled.input`
   &:focus {
     outline: none;
   }
+`;
+
+export const ButtonGroup = styled.div`
+  justify-content: flex-end;
+  display: flex;
+  gap: 10px;
 `;
