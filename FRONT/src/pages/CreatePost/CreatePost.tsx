@@ -1,9 +1,9 @@
 import { ButtonGroup, CreatePostContainer, PostTitleInput } from "./CreatePost.style";
 import CategorySelector from "./components/CategorySelector/CategorySelector";
-import { Category } from "@_types/category";
+import { Category } from "../../types/category";
 import { fetchCategories } from "@_services/categoryApi";
 import { useQuery } from "@tanstack/react-query";
-import { ApiResponse } from "@_services/api";
+import { ApiResponse } from "../../services/api";
 import EditorContainer from "./components/EditorContainer/EditorContainer";
 import Button from "../../components/Button/Button";
 import NicknamePasswordInput from "./components/NicknamePasswordInput/NicknamePasswordInput";
