@@ -24,13 +24,9 @@ public class S3Service {
     @Value("${cloud.aws.s3.bucket}")
     private String bucket;
 
-    @Value("${spring.servlet.multipart.max-file-size}")
-    private String maxSizeString;
-
     // 단일 파일 저장
     public String saveFile(MultipartFile file) {
         String randomFilename = generateRandomFilename(file);
-
         log.info("File upload started: {}, bucketName: {}", randomFilename, bucket);
 
         ObjectMetadata metadata = new ObjectMetadata();

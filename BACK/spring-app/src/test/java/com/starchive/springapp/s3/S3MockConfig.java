@@ -12,9 +12,9 @@ import org.springframework.context.annotation.Bean;
 @TestConfiguration
 class S3MockConfig {
 
-    public String bucket = "testbucket-in-config";
+    private String testBucketName = "test-bucket-in-memory";
 
-    private String region = "na-east-1";
+    private String testRegion = "na-east-1";
 
     @Bean
     public S3Mock s3Mock() {
@@ -24,11 +24,11 @@ class S3MockConfig {
                 .build();
     }
 
-    @Bean
+    @Bean(name = "MockS3Client")
     public AmazonS3 amazonS3(S3Mock s3Mock) {
         s3Mock.start();
         AwsClientBuilder.EndpointConfiguration endpoint = new AwsClientBuilder.EndpointConfiguration(
-                "http://localhost:8001", region);
+                "http://localhost:8001", testRegion);
 
         AmazonS3 client = AmazonS3ClientBuilder
                 .standard()
@@ -37,8 +37,12 @@ class S3MockConfig {
                 .withCredentials(new AWSStaticCredentialsProvider(new AnonymousAWSCredentials()))
                 .build();
 
-        client.createBucket(bucket);
+        client.createBucket(testBucketName);
 
         return client;
+    }
+
+    public String getTestBucketName() {
+        return testBucketName;
     }
 }

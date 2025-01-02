@@ -6,16 +6,22 @@ import com.amazonaws.services.s3.AmazonS3;
 import java.lang.reflect.Field;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Import;
 import org.springframework.mock.web.MockMultipartFile;
 
-@SpringBootTest(properties = "spring.profiles.active=test")
+
+@SpringBootTest
 @Import(S3MockConfig.class)
 class S3ServiceTest {
 
     @Autowired
+    @Qualifier("MockS3Client")
     private AmazonS3 amazonS3;
+
+    @Autowired
+    S3MockConfig s3MockConfig;
 
     @Autowired
     private S3Service s3Service;
@@ -25,14 +31,19 @@ class S3ServiceTest {
         //given
         String path = "test.png";
         String contentType = "image/png";
-        String bucket = "testbucket-in-config";
+        String bucket = s3MockConfig.getTestBucketName();
 
         MockMultipartFile file = new MockMultipartFile("test", path, contentType, "test".getBytes());
-        //when
-        Field field = s3Service.getClass().getDeclaredField("bucket");
-        field.setAccessible(true);
-        field.set(s3Service, bucket);
+        //Reflection s3Service
+        Field reflectionFieldFor_amazonS3 = s3Service.getClass().getDeclaredField("amazonS3");
+        reflectionFieldFor_amazonS3.setAccessible(true);
+        reflectionFieldFor_amazonS3.set(s3Service, amazonS3);
 
+        Field reflectionFieldFor_bucket = s3Service.getClass().getDeclaredField("bucket");
+        reflectionFieldFor_bucket.setAccessible(true);
+        reflectionFieldFor_bucket.set(s3Service, bucket);
+
+        //when
         String urlPath = s3Service.saveFile(file);
 
         //then
