@@ -22,6 +22,12 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v4
 
+    - name: Create application properties files
+      run: |
+        mkdir -p BACK/spring-app/src/main/resources
+        echo "${{ secrets.APPLICATION_PROPERTIES_FOR_TEST }}" > BACK/spring-app/src/main/resources/application-test.properties
+        echo "${{ secrets.APPLICATION_PROPERTIES_FOR_PROD }}" > BACK/spring-app/src/main/resources/application-prod.properties
+
     - name: Set up SSH
       run: |
         mkdir -p ~/.ssh
@@ -29,9 +35,15 @@ jobs:
         chmod 600 ~/.ssh/id_rsa
         ssh-keyscan -H "${{ vars.EC2_HOST }}" >> ~/.ssh/known_hosts
 
+    - name: Transfer properties files to EC2
+      run: |
+        scp BACK/spring-app/src/main/resources/application-test.properties ec2-user@${{ vars.EC2_HOST }}:/home/ec2-user/starchive/BACK/spring-app/src/main/resources/
+        scp BACK/spring-app/src/main/resources/application-prod.properties ec2-user@${{ vars.EC2_HOST }}:/home/ec2-user/starchive/BACK/spring-app/src/main/resources/
+
+
     - name: Execute Deployment Script on EC2
       run: |
-        ssh ec2-user@${{ vars.EC2_HOST }} << 'EOF'
+        ssh ec2-user@${{ vars.EC2_HOST }} << 'EOF'  
         cd /home/ec2-user/starchive/scripts
         
         git checkout develop
