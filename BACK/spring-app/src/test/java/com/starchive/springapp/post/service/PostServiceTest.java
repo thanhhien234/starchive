@@ -18,8 +18,10 @@ import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.transaction.annotation.Transactional;
 
 @SpringBootTest
+@Transactional
 class PostServiceTest {
     @Autowired
     HashTagRepository hashTagRepository;
@@ -41,36 +43,34 @@ class PostServiceTest {
 
     @Test
     public void 게시글_작성_통합_테스트() throws Exception {
-        System.out.println(categoryRepository);
         //given
-        HashTag hashTag = new HashTag(1L, "tag1");
+        HashTag hashTag = new HashTag("tag1");
         hashTagRepository.save(hashTag);
-        HashTag hashTag2 = new HashTag(2L, "tag2");
+        HashTag hashTag2 = new HashTag("tag2");
         hashTagRepository.save(hashTag2);
 
-        PostImage postImage = new PostImage(1L, "imagePath", null, null);
+        PostImage postImage = new PostImage("imagePath");
         postImageRepository.save(postImage);
 
-        Category category = new Category(1L, null, "예시카테고리", null);
+        Category category = new Category("예시카테고리", null);
         categoryRepository.save(category);
 
+        List<Long> hashTagIds = new ArrayList<>(List.of(hashTag.getId(), hashTag2.getId()));
+        List<Long> postImageIds = new ArrayList<>(List.of(postImage.getId()));
+
         PostCreateRequest postCreateRequest =
-                new PostCreateRequest("title", "content", "author", "password", 1L
-                        , new ArrayList<>(List.of(1L, 2L)), new ArrayList<>(List.of(1L)));
+                new PostCreateRequest("title", "content", "author", "password"
+                        , category.getId(), hashTagIds, postImageIds);
 
         //when
-        System.out.println(categoryRepository.findById(1L).get().getName());
-
         postService.createPost(postCreateRequest);
 
-        List<Post> posts = postRepository.findAll();
-        PostImage findPostImage = postImageRepository.findById(1L).get();
+        Post createdPost = postRepository.findAll().getFirst();
         List<PostHashTag> postHashTags = postHashTagRepository.findAll();
 
         //then
-        assertThat(posts.size()).isEqualTo(1);
-        assertThat(posts.get(0).getCategory().getId()).isEqualTo(1L);
-        assertThat(findPostImage.getPost().getId()).isEqualTo(1L);
+        assertThat(createdPost.getCategory().getId()).isEqualTo(category.getId());
+        assertThat(postImage.getPost().getId()).isEqualTo(createdPost.getId());
         assertThat(postHashTags.size()).isEqualTo(2);
 
     }
