@@ -9,7 +9,7 @@ import {
   SubCategoryList,
   SubCategoryItem,
 } from "./CategorySelector.style";
-import { Category } from "@_types/category";
+import { Category } from "../../../../types/category";
 
 function CategorySelector({ categories }: { categories: Category[] }) {
   const [selectedCategory, setSelectedCategory] = useState<Category | null>(null);

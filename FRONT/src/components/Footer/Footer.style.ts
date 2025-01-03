@@ -2,7 +2,6 @@ import styled from "styled-components";
 
 export const FooterContainer = styled.footer`
   width: 100%;
-  position: fixed;
   bottom: 0;
   box-sizing: border-box;
   background-color: var(--primary-color);
