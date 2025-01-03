@@ -21,20 +21,15 @@ public class PostService {
     private final PostImageService postImageService;
 
     public void createPost(PostCreateRequest request) {
-        Post post = Post.from(request);
+        Category category = categoryService.findOne(request.getCategoryId());
+        Post post = Post.of(request, category);
 
         postRepository.save(post);
-        setCategoryOfPost(request, post);
 
         postHashTagService.storePostHashTag(request.getHashTagIds(), post);
 
         postImageService.setPost(request.getImageIds(), post);
 
-    }
-
-    private void setCategoryOfPost(PostCreateRequest request, Post post) {
-        Category category = categoryService.findOne(request.getCategoryId());
-        post.changeCategory(category);
     }
 
 }

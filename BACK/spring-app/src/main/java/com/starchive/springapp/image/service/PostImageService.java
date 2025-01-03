@@ -25,10 +25,7 @@ public class PostImageService {
 
     public PostImageDto uploadImage(MultipartFile image) {
         String imagePath = s3Service.saveFile(image);
-        PostImage postImage = PostImage.builder()
-                .imagePath(imagePath)
-                .uploadDate(LocalDateTime.now())
-                .build();
+        PostImage postImage = new PostImage(imagePath);
 
         postImageRepository.save(postImage);
 

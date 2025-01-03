@@ -51,20 +51,16 @@ public class Post {
     @JoinColumn(name = "categoryId")
     private Category category;
 
-    public static Post from(PostCreateRequest request) {
+    public static Post of(PostCreateRequest request, Category category) {
         Post post = new Post();
         post.title = request.getTitle();
         post.content = request.getContent();
         post.author = request.getAuthor();
         post.password = request.getPassword();
         post.createAt = LocalDateTime.now();
+        post.category = category;
 
         return post;
     }
-
-    public void changeCategory(Category category) {
-        this.category = category;
-    }
-
 
 }
