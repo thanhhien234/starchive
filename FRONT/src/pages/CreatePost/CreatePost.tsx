@@ -7,6 +7,7 @@ import { ApiResponse } from "../../services/api";
 import EditorContainer from "./components/EditorContainer/EditorContainer";
 import Button from "../../components/Button/Button";
 import NicknamePasswordInput from "./components/NicknamePasswordInput/NicknamePasswordInput";
+import TagWrapper from "./components/TagWrapper/TagWrapper";
 
 function CreatePost() {
   const { data } = useQuery<ApiResponse<Category[]>>({
@@ -19,6 +20,7 @@ function CreatePost() {
       <CategorySelector categories={data?.data as Category[]} />
       <PostTitleInput placeholder="제목을 입력하세요" />
       <EditorContainer />
+      <TagWrapper/>
       <NicknamePasswordInput />
       <ButtonGroup>
         <Button content='임시저장' type='Primary' handleButtonClick={()=>{}} />
