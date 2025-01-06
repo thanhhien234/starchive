@@ -7,42 +7,6 @@ export const Container = styled.div`
   background-color: #fff;
 `;
 
-export const Header = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 4px 16px;
-`;
-
-export const Group = styled.div`
-  display: flex;
-  gap: 4px;
-`;
-
-export const Icon = styled.img`
-  width: 16px;
-  height: 16px;
-  padding: 8px;
-  border-radius: 50%;
-  cursor: pointer;
-
-  &:hover {
-    background-color: var(--hover-background-color);
-  }
-`;
-
-export const ModeToggle = styled.span<{ $active: boolean }>`
-  padding: 8px;
-  border-radius: 16px;
-  cursor: pointer;
-  font-weight: ${({ $active }) => ($active ? 'bold' : 'normal')};
-  color: ${({ $active }) => ($active ? 'var(--text-color)' : 'var(--footer-text-color)')};
-
-  &:hover {
-    background-color: var(--hover-background-color);
-  }
-`;
-
 const sharedStyles = `
   padding: 24px;
   border: none;
@@ -57,7 +21,6 @@ export const Editor = styled.textarea`
   width: 100%;
   flex-grow: 1;
   font-family: inherit;
-  border-right: 1px solid var(--line-color);
   resize: none;
   line-height: 1.7;
 
