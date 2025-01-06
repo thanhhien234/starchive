@@ -7,10 +7,9 @@ export const Container = styled.div`
   background-color: #fff;
 `;
 
-export const IconGroup = styled.div`
+export const Group = styled.div`
   display: flex;
   gap: 4px;
-  padding: 4px 16px;
 `;
 
 export const Icon = styled.img`
@@ -57,9 +56,8 @@ export const Editor = styled.textarea`
   }
 `;
 
-export const Preview = styled.div<{ alignment?: string }>`
+export const Preview = styled.div`
   ${sharedStyles}
-  text-align: ${({ alignment }) => alignment || 'left'};
 
   blockquote { // 인용문
     margin: 0;
