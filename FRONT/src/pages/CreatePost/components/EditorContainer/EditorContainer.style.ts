@@ -27,7 +27,7 @@ export const Icon = styled.img`
   cursor: pointer;
 
   &:hover {
-    background-color: #f0f0f0;
+    background-color: var(--hover-background-color);
   }
 `;
 
@@ -39,7 +39,7 @@ export const ModeToggle = styled.span<{ $active: boolean }>`
   color: ${({ $active }) => ($active ? 'var(--text-color)' : 'var(--footer-text-color)')};
 
   &:hover {
-    background-color: #f0f0f0;
+    background-color: var(--hover-background-color);
   }
 `;
 

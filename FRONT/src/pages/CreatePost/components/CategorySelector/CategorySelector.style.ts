@@ -57,7 +57,7 @@ export const BigCategory = styled.div`
   }
 
   &:hover {
-    background-color: #f0f0f0;
+    background-color: var(--hover-background-color);
   }
 `;
 
@@ -73,6 +73,6 @@ export const SubCategoryItem = styled.li`
   padding: 5px 0;
 
   &:hover {
-    background-color: #f0f0f0;
+    background-color: var(--hover-background-color);
   }
 `;
