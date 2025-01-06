@@ -1,31 +1,30 @@
-import { useState } from "react";
-import { Container, Group, Icon, Editor, EditorPreviewWrapper, InlineCode, Preview } from "./EditorContainer.style";
+import { useEffect, useState } from "react";
+import { Container, Group, Icon, Editor, EditorPreviewWrapper, Preview } from "./EditorContainer.style";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
-import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
-import { docco } from "react-syntax-highlighter/dist/esm/styles/hljs";
+import Prism from 'prismjs';
+import 'prismjs/themes/prism.css';
+import 'prismjs/components/prism-javascript';
+import 'prismjs/components/prism-typescript';
+import 'prismjs/components/prism-java';
+import 'prismjs/components/prism-python';
+import 'prismjs/components/prism-c';
+import 'prismjs/components/prism-cpp';
+import 'prismjs/components/prism-css';
+import 'prismjs/components/prism-sql';
+import 'prismjs/components/prism-bash';
+import 'prismjs/components/prism-yaml';
+import 'prismjs/components/prism-json';
 import addPhotoIcon from '@_assets/icons/add-photo.svg';
-import { CodeProps } from "react-markdown/lib/ast-to-react";
+import CodeBlock from "./CodeBlock";
 
 function EditorContainer() {
   const markdownGrammar = `# 제목\n## 부제목\n*기울임* _기울임_\n**굵게** __굵게__\n[링크](https://www.google.com)\n![이미지](이미지 주소)\n> 인용문\n* 순서가 없는 목록\n- 순서가 없는 목록\n1. 순서가 있는 목록\n1) 순서가 있는 목록\n띄어쓰기 2번 하고 목록 => 하위목록\n--- 수평선 *** 수평선\n\`한 줄 코드\`\n\`\`\`\n코드블럭\n\`\`\`\n여러 줄의 공백\n&nbsp;\n&nbsp;\n`;
   const [markdown, setMarkdown] = useState<string>('');
 
-  const renderCodeBlock = ({ inline, className, children, ...rest }: CodeProps) => {
-    if (inline) {
-      return <InlineCode>{String(children).replace(/\n$/, '')}</InlineCode>;
-    }
-
-    const language = /language-(\w+)/.exec(className || '')?.[1] || 'plaintext';
-    return (
-      <SyntaxHighlighter
-        {...rest}
-        style={docco}
-        language={language}
-        children={String(children).replace(/\n$/, '')}
-      />
-    )
-  }
+  useEffect(() => {
+    Prism.highlightAll();
+  }, [markdown]);
 
   return (
     <Container>
@@ -42,7 +41,7 @@ function EditorContainer() {
           <ReactMarkdown
             children={markdown}
             remarkPlugins={[remarkGfm]}
-            components={{code: renderCodeBlock}}
+            components={{code: CodeBlock}}
           />
         </Preview>
       </EditorPreviewWrapper>
