@@ -1,5 +1,5 @@
 import { useEffect, useRef } from "react";
-import { InlineCode } from "./EditorContainer.style";
+import { InlineCode } from "./MarkdownEditor.style";
 import Prism from "prismjs";
 import 'prismjs/themes/prism.css';
 import 'prismjs/components/prism-javascript';

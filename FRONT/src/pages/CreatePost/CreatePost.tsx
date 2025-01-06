@@ -4,10 +4,10 @@ import { Category } from "../../types/category";
 import { fetchCategories } from "@_services/categoryApi";
 import { useQuery } from "@tanstack/react-query";
 import { ApiResponse } from "../../services/api";
-import EditorContainer from "./components/EditorContainer/EditorContainer";
 import Button from "../../components/Button/Button";
 import NicknamePasswordInput from "./components/NicknamePasswordInput/NicknamePasswordInput";
 import TagWrapper from "./components/TagWrapper/TagWrapper";
+import MarkdownEditor from "./components/MarkdownEditor/MarkdownEditor";
 
 function CreatePost() {
   const { data } = useQuery<ApiResponse<Category[]>>({
@@ -19,7 +19,7 @@ function CreatePost() {
     <CreatePostContainer>
       <CategorySelector categories={data?.data as Category[]} />
       <PostTitleInput placeholder="제목을 입력하세요" />
-      <EditorContainer />
+      <MarkdownEditor />
       <TagWrapper/>
       <NicknamePasswordInput />
       <ButtonGroup>
