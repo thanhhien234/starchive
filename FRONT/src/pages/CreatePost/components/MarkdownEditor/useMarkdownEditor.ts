@@ -3,6 +3,7 @@ import { useState, useRef } from "react";
 function useMarkdownEditor(initialValue: string = '') {
   const [markdown, setMarkdown] = useState<string>(initialValue);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
+  const fileInputRef = useRef<HTMLInputElement | null>(null);
 
   const handleMarkdownChange = (value: string) => {
     setMarkdown(value);
@@ -64,11 +65,24 @@ function useMarkdownEditor(initialValue: string = '') {
     }, 0);
   };
 
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file && file.type.startsWith("image/")) {
+      const imageUrl = URL.createObjectURL(file);
+      const imageMarkdown = `\n![이미지](${imageUrl})\n`;
+      setMarkdown((prev) => `${prev}${imageMarkdown}`);
+    } else {
+      alert("이미지 파일을 선택할 수 없습니다");
+    }
+  };
+
   return {
     markdown,
     handleMarkdownChange,
     handleIconButtonClick,
+    handleFileChange,
     textareaRef,
+    fileInputRef,
   };
 }
 
