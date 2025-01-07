@@ -1,4 +1,5 @@
 import { useState, useRef } from "react";
+import { postImage } from "@_services/createPostApi.ts";
 
 function useMarkdownEditor(initialValue: string = '') {
   const [markdown, setMarkdown] = useState<string>(initialValue);
@@ -65,10 +66,11 @@ function useMarkdownEditor(initialValue: string = '') {
     }, 0);
   };
 
-  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleFileUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (file && file.type.startsWith("image/")) {
-      const imageUrl = URL.createObjectURL(file);
+      const response = await postImage(file);
+      const imageUrl = response.imagePath;
       const imageMarkdown = `\n![이미지](${imageUrl})\n`;
       setMarkdown((prev) => `${prev}${imageMarkdown}`);
     } else {
@@ -80,7 +82,7 @@ function useMarkdownEditor(initialValue: string = '') {
     markdown,
     handleMarkdownChange,
     handleIconButtonClick,
-    handleFileChange,
+    handleFileUpload,
     textareaRef,
     fileInputRef,
   };

@@ -11,7 +11,7 @@ function MarkdownEditor() {
     markdown,
     handleMarkdownChange,
     handleIconButtonClick,
-    handleFileChange,
+    handleFileUpload,
     textareaRef,
     fileInputRef,
   } = useMarkdownEditor();
@@ -63,7 +63,7 @@ function MarkdownEditor() {
         accept="image/*"
         style={{ display: "none" }}
         ref={fileInputRef}
-        onChange={handleFileChange}
+        onChange={handleFileUpload}
       />
     </Container>
   );
