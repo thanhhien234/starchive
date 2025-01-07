@@ -7,46 +7,22 @@ export const Container = styled.div`
   background-color: #fff;
 `;
 
-export const IconGroup = styled.div`
-  display: flex;
-  gap: 4px;
-  padding: 4px 16px;
-`;
-
-export const Icon = styled.img`
-  width: 16px;
-  height: 16px;
-  padding: 8px;
-  border-radius: 50%;
-  cursor: pointer;
-
-  &:hover {
-    background-color: var(--background-color);
-  }
-`;
-
-export const EditorPreviewWrapper = styled.div`
-  display: flex;
-  flex-grow: 1;
-`;
-
 const sharedStyles = `
-  width: 50%;
   padding: 24px;
-  font-size: 14px;
   border: none;
-  color: var(--text-color);
   word-wrap: break-word;
   white-space: pre-wrap;
-  border-top: 1px solid #DEE1E1;
-  overflow-y: hidden;
-  line-height: 1.6;
+  border-top: 1px solid var(--line-color);
 `;
 
 export const Editor = styled.textarea`
   ${sharedStyles}
-  border-right: 1px solid #DEE1E1;
+  box-sizing: border-box;
+  width: 100%;
+  flex-grow: 1;
+  font-family: inherit;
   resize: none;
+  line-height: 1.7;
 
   &::placeholder {
     white-space: pre-wrap;
@@ -57,21 +33,30 @@ export const Editor = styled.textarea`
   }
 `;
 
-export const Preview = styled.div<{ alignment?: string }>`
+export const Preview = styled.div`
   ${sharedStyles}
-  text-align: ${({ alignment }) => alignment || 'left'};
 
   blockquote { // 인용문
     margin: 0;
-    padding-left: 20px;
-    border-left: 4px solid var(--footer-text-color);
-    font-style: italic;
+    padding: 8px 16px;
+    border-left: 4px solid var(--point-color);
+    background-color: var(--background-color);
   }
 
   ul, ol {
+    display: inline-block;
     margin: 0;
     padding-left: 20px;
+  }
+
+  ul ul, ol ol {
     line-height: 1;
+  }
+
+  hr {
+    background-color: var(--line-color);
+    height: 1px;
+    border: 0;
   }
 `;
 
