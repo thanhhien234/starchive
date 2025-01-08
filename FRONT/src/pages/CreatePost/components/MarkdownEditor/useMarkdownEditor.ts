@@ -70,7 +70,7 @@ function useMarkdownEditor(initialValue: string = '') {
     const file = event.target.files?.[0];
     if (file && file.type.startsWith("image/")) {
       const response = await postImage(file);
-      const imageUrl = response.imagePath;
+      const imageUrl = response.data.imagePath;
       const imageMarkdown = `\n![이미지](${imageUrl})\n`;
       setMarkdown((prev) => `${prev}${imageMarkdown}`);
     } else {
