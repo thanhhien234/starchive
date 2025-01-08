@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Container, Editor, Preview } from "./MarkdownEditor.style";
+import { Container, Editor, Preview, PreviewImg } from "./MarkdownEditor.style";
 import Markdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import CodeBlock from "./CodeBlock";
@@ -42,17 +42,7 @@ function MarkdownEditor() {
             components={{
               code: CodeBlock,
               img: ({ src, alt }) => (
-                <img
-                  src={src}
-                  alt={alt}
-                  style={{
-                    maxWidth: "600px",
-                    height: "auto",
-                    objectFit: "contain",
-                    display: "block",
-                    margin: "0 auto",
-                  }}
-                />
+                <PreviewImg src={src} alt={alt} />
               ),
             }}
           />
