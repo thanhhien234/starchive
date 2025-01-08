@@ -11,9 +11,10 @@ type ToolBarProps = {
   viewMode: "write" | "preview";
   setViewMode: (mode: "write" | "preview") => void;
   handleIconButtonClick: (action: string) => void;
+  handleAddPhotoClick: () => void;
 };
 
-function ToolBar({ viewMode, setViewMode, handleIconButtonClick }: ToolBarProps) {
+function ToolBar({ viewMode, setViewMode, handleIconButtonClick, handleAddPhotoClick }: ToolBarProps) {
   return (
     <ToolBarContainer>
       <Group>
@@ -27,7 +28,7 @@ function ToolBar({ viewMode, setViewMode, handleIconButtonClick }: ToolBarProps)
           <img src={underlineIcon} alt="밑줄" />
         </IconButton>
         <Separator />
-        <IconButton onClick={() => handleIconButtonClick("image")}>
+        <IconButton onClick={handleAddPhotoClick}>
           <img src={addPhotoIcon} alt="사진 추가" />
         </IconButton>
         <IconButton onClick={() => handleIconButtonClick("quote")}>

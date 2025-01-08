@@ -1,8 +1,17 @@
 import { useState, useRef } from "react";
+import { postImage } from "@_services/createPostApi.ts";
 
-function useMarkdownEditor(initialValue: string = '') {
+interface PostImageResponse {
+  data: {
+    id: number;
+    imagePath: string;
+  };
+}
+
+function useMarkdownEditor(initialValue: string = "") {
   const [markdown, setMarkdown] = useState<string>(initialValue);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
+  const fileInputRef = useRef<HTMLInputElement | null>(null);
 
   const handleMarkdownChange = (value: string) => {
     setMarkdown(value);
@@ -64,11 +73,34 @@ function useMarkdownEditor(initialValue: string = '') {
     }, 0);
   };
 
+  const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file && file.type.startsWith("image/")) {
+      const tempMarkdown = `\n![이미지](Uploading...)\n`;
+      setMarkdown((prev) => `${prev}${tempMarkdown}`);
+
+      postImage(file)
+        .then((response: PostImageResponse) => {
+          const imageUrl = response.data.imagePath;
+          setMarkdown((prev) =>prev.replace("![이미지](Uploading...)", `![이미지](${imageUrl})`));
+        })
+        .catch((error: string) => {
+          alert("이미지 업로드에 실패했습니다.");
+          console.error(error);
+          setMarkdown((prev) => prev.replace("![이미지](Uploading...)", ""));
+        });
+    } else {
+      alert("이미지 파일을 선택할 수 없습니다");
+    }
+  };
+
   return {
     markdown,
     handleMarkdownChange,
     handleIconButtonClick,
+    handleFileUpload,
     textareaRef,
+    fileInputRef,
   };
 }
 

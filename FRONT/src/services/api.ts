@@ -1,7 +1,7 @@
 type RequestOptions = {
   method: 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE';
   headers?: HeadersInit,
-  body?: unknown,
+  body?: FormData | unknown;
   params?: Record<string, string>
 }
 
@@ -27,7 +27,9 @@ const createFetchRequest = (method: 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE')
       headers
     }
 
-    if (body) {
+    if (body instanceof FormData) {
+      config.body = body;
+    } else if (body) {
       config.body = JSON.stringify(body);
     }
 
@@ -37,7 +39,7 @@ const createFetchRequest = (method: 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE')
       throw new Error(`HTTP error! status: ${res.status}`);
     }
 
-    const data = (await res.json()) as T;
+    const data = (await res.json()).data as T;
 
     return { data, status: res.status }
   } 

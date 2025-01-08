@@ -67,3 +67,11 @@ export const InlineCode = styled.code`
   padding: 2px 5px;
   border-radius: 5px;
 `;
+
+export const PreviewImg = styled.img`
+  max-width: 600px;
+  height: auto;
+  object-fit: contain;
+  display: block;
+  margin: 0 auto;
+`;
