@@ -17,7 +17,7 @@ public class WebConfig implements WebMvcConfigurer {
                 .allowedOrigins(
                         "https://starchive.vercel.app",
                         "https://starchive-back.store",
-                        "http:localhost:5173"
+                        "http://localhost:5173"
                 )
                 .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS") // OPTIONS 추가
                 .allowedHeaders("*")
