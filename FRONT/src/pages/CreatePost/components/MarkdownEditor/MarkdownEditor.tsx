@@ -42,17 +42,17 @@ function MarkdownEditor() {
             components={{
               code: CodeBlock,
               img: ({ src, alt }) => (
-                <div style={{ display: "flex", justifyContent: "center" }}>
-                  <img
-                    src={src}
-                    alt={alt}
-                    style={{
-                      maxWidth: "600px",
-                      height: "auto",
-                      objectFit: "contain",
-                    }}
-                  />
-                </div>
+                <img
+                  src={src}
+                  alt={alt}
+                  style={{
+                    maxWidth: "600px",
+                    height: "auto",
+                    objectFit: "contain",
+                    display: "block",
+                    margin: "0 auto",
+                  }}
+                />
               ),
             }}
           />
