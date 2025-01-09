@@ -1,3 +1,4 @@
+import { CreatePostParams } from '../types/post';
 import { postRequest, ApiResponse } from './api';
 
 export const postImage = async (imageFile: File): Promise<ApiResponse<any>> => {
@@ -10,3 +11,12 @@ export const postImage = async (imageFile: File): Promise<ApiResponse<any>> => {
 
   return response;
 };
+
+export const createPost = (post: CreatePostParams) => {
+  return postRequest<CreatePostParams>('/post', {
+    body: post,
+    headers: {
+      'Content-type': 'application/json',
+    }
+  })
+}

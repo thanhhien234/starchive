@@ -11,12 +11,18 @@ import {
 } from "./CategorySelector.style";
 import { Category } from "../../../../types/category";
 
-function CategorySelector({ categories }: { categories: Category[] }) {
+interface CategorySelectorProps {
+  categories: Category[],
+  onCategorySelect: (id: number) => void,
+}
+
+function CategorySelector({ categories, onCategorySelect}: CategorySelectorProps) {
   const [selectedCategory, setSelectedCategory] = useState<Category | null>(null);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
   const handleSelect = (category: Category) => {
     setSelectedCategory(category);
+    if (category.id) onCategorySelect(category.id);
     setIsDropdownOpen(false);
     console.log(category.id);
   };

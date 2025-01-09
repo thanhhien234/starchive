@@ -6,7 +6,7 @@ type RequestOptions = {
 }
 
 export type ApiResponse<T> = {
-  data: T;
+  data?: T;
   status: number;
 }
 
@@ -39,10 +39,12 @@ const createFetchRequest = (method: 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE')
       throw new Error(`HTTP error! status: ${res.status}`);
     }
 
-    const data = (await res.json()).data as T;
+    const text = await res.text();
+    const data = text ? JSON.parse(text).data as T : null;
 
-    return { data, status: res.status }
-  } 
+    if (data) return { data, status: res.status };
+    return { status: res.status }; // response body가 없는 경우
+  }
 
 // 메서드별 요청 생성
 export const getRequest = createFetchRequest('GET');

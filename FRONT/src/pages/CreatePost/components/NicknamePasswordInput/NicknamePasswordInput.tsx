@@ -1,22 +1,27 @@
-import { useState } from 'react';
 import { InputContainer, StyledInput } from './NicknamePasswordInput.style';
 
-function NicknamePasswordInput() {
-  const [nickname, setNickname] = useState('');
-  const [password, setPassword] = useState('');
+interface NicknamePasswordInput {
+  author: string,
+  password: string,
+  onAuthorChange: (value: string) => void;
+  onPasswordChange: (value: string) => void;
+}
 
+function NicknamePasswordInput({author, password, onAuthorChange, onPasswordChange}: NicknamePasswordInput) {
   return (
     <InputContainer>
       <StyledInput
         placeholder="닉네임을 입력하세요"
-        value={nickname}
-        onChange={(e) => setNickname(e.target.value)}
+        value={author}
+        onChange={(e) => onAuthorChange(e.target.value)}
+        required
       />
       <StyledInput
         type="password"
         placeholder="비밀번호를 입력하세요"
         value={password}
-        onChange={(e) => setPassword(e.target.value)}
+        onChange={(e) => onPasswordChange(e.target.value)}
+        required
       />
     </InputContainer>
   );
