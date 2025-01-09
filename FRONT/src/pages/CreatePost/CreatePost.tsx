@@ -8,8 +8,10 @@ import Button from "../../components/Button/Button";
 import NicknamePasswordInput from "./components/NicknamePasswordInput/NicknamePasswordInput";
 import TagWrapper from "./components/TagWrapper/TagWrapper";
 import MarkdownEditor from "./components/MarkdownEditor/MarkdownEditor";
+import useCreatePost from "./hooks/useCreatePost";
 
 function CreatePost() {
+  const { post, handlePostChange, handleSaveButtonClick } = useCreatePost();
   const { data } = useQuery<ApiResponse<Category[]>>({
     queryKey: ["categories"],
     queryFn: () => fetchCategories(),
@@ -24,7 +26,7 @@ function CreatePost() {
       <NicknamePasswordInput />
       <ButtonGroup>
         <Button content='임시저장' type='Primary' handleButtonClick={()=>{}} />
-        <Button content='저장하기' type='Primary' handleButtonClick={()=>{}} />
+        <Button content='저장' type='Primary' handleButtonClick={handleSaveButtonClick} />
       </ButtonGroup>
     </CreatePostContainer>
   );
