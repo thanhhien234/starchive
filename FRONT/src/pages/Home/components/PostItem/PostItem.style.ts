@@ -70,4 +70,14 @@ export const Content = styled.p`
 
 export const TagContainer = styled.span`
   color: var(--point-color);
+
+  & > a {
+    color: var(--point-color);
+    text-decoration: none;
+  }
 `
+
+export const HashTagContainer = styled.div`
+  display: flex;
+  gap: 5px;
+`;

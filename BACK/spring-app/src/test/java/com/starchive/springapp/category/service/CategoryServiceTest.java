@@ -3,8 +3,9 @@ package com.starchive.springapp.category.service;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import com.starchive.springapp.category.domain.Category;
-import com.starchive.springapp.category.dto.CategoryListTreeResponse;
+import com.starchive.springapp.category.dto.CategoryDto;
 import com.starchive.springapp.category.repository.CategoryRepository;
+import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,16 +41,16 @@ class CategoryServiceTest {
     @Test
     void 전체_목록_조회_테스트() {
         // when
-        CategoryListTreeResponse response = categoryService.findAll();
+        List<CategoryDto> response = categoryService.findAll();
 
         // then
-        assertThat(response.getRoots()).hasSize(3);
-        assertThat(response.getRoots().get(0).getName()).isEqualTo("알고리즘");
-        assertThat(response.getRoots().get(0).getChildren()).hasSize(2);
-        assertThat(response.getRoots().get(0).getChildren().get(0).getName()).isEqualTo("자료구조");
-        assertThat(response.getRoots().get(0).getChildren().get(1).getName()).isEqualTo("다이나믹프로그래밍");
-        assertThat(response.getRoots().get(1).getName()).isEqualTo("프로젝트");
-        assertThat(response.getRoots().get(1).getChildren().get(0).getName()).isEqualTo("요구사항");
+        assertThat(response).hasSize(3);
+        assertThat(response.get(0).getName()).isEqualTo("알고리즘");
+        assertThat(response.get(0).getChildren()).hasSize(2);
+        assertThat(response.get(0).getChildren().get(0).getName()).isEqualTo("자료구조");
+        assertThat(response.get(0).getChildren().get(1).getName()).isEqualTo("다이나믹프로그래밍");
+        assertThat(response.get(1).getName()).isEqualTo("프로젝트");
+        assertThat(response.get(1).getChildren().get(0).getName()).isEqualTo("요구사항");
     }
 
 }

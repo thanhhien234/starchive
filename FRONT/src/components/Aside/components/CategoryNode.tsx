@@ -1,6 +1,6 @@
-import categoryToggleButton from '../../../assets/icons/category-toggle-button.svg'
+import categoryToggleButton from '@_assets/icons/category-toggle-button.svg'
 import useCategoryNode from './useCategoryNode';
-import { Category } from '../types/category';
+import { Category, CategoryId } from '../../../types/category';
 import {
   CategoryButton,
   CategoryToggleButton,
@@ -11,8 +11,8 @@ import {
 
 interface CategoryNodeProps {
   category: Category;
-  activeCategoryId?: number;
-  onSelect: (id: number) => void;
+  activeCategoryId?: CategoryId;
+  onSelect: (id: CategoryId) => void;
 }
 
 function CategoryNode({ category, onSelect, activeCategoryId }: CategoryNodeProps) {

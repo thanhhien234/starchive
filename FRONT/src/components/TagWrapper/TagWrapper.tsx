@@ -1,15 +1,23 @@
+import { Tag as TagType } from "../../types/tag";
+import { TagList, Tag } from "./TagWrapper.style";
 
-import { TagList, Tag } from "../TagWrapper/TagWrapper.style";
-
-interface TagProps {
-  tagList: string[];
+interface TagWrapperProps {
+  tagList: TagType[];
+  onTagClick?: (name: number) => void;
+  selectedTag?: number | null;
 }
 
-function TagWrapper({ tagList }: TagProps) {
+function TagWrapper({ tagList, onTagClick, selectedTag }: TagWrapperProps) {
   return (
     <TagList>
       {tagList.map((tag, index) => (
-        <Tag key={index}>{tag}</Tag>
+        <Tag
+          key={index}
+          onClick={() => onTagClick && onTagClick(tag.id)}
+          $isSelected={tag.id === selectedTag}
+        >
+          {tag.name}
+        </Tag>
       ))}
     </TagList>
   );

@@ -1,0 +1,172 @@
+[
+	{
+		"categoryHier": [
+			{
+				"categoryId": 1,
+				"categoryName": "기술"
+			},
+			{
+				"categoryId": 101,
+				"categoryName": "프로그래밍"
+			}
+		],
+		"postId": 1001,
+		"title": "자바스크립트 입문",
+		"author": "홍길동",
+		"createdAt": "2024-11-01",
+		"content": "자바스크립트는 웹 개발에서 가장 인기 있는 프로그래밍 언어 중 하나입니다. 이 글에서는 기본 개념과 모범 사례를 소개합니다."
+	},
+	{
+		"categoryHier": [
+			{
+				"categoryId": 2,
+				"categoryName": "라이프스타일"
+			},
+			{
+				"categoryId": 201,
+				"categoryName": "건강"
+			}
+		],
+		"postId": 1002,
+		"title": "숙면을 위한 10가지 팁",
+		"author": "김민지",
+		"createdAt": "2024-11-02",
+		"content": "질 좋은 수면은 건강에 필수적입니다. 이 글에서는 수면 개선을 위한 10가지 팁을 공유합니다. 밤 시간 루틴부터 침실 환경 최적화까지 다룹니다."
+	},
+	{
+		"categoryHier": [
+			{
+				"categoryId": 3,
+				"categoryName": "엔터테인먼트"
+			},
+			{
+				"categoryId": 301,
+				"categoryName": "영화"
+			}
+		],
+		"postId": 1003,
+		"title": "2024년 최고의 SF 영화 5선",
+		"author": "이철수",
+		"createdAt": "2024-11-03",
+		"content": "SF 영화는 오랜 시간 동안 관객을 매료시켜 왔습니다. 올해 개봉된 최고의 SF 영화 5편을 소개하고, 그 매력을 살펴봅니다."
+	},
+	{
+		"categoryHier": [
+			{
+				"categoryId": 4,
+				"categoryName": "교육"
+			},
+			{
+				"categoryId": 401,
+				"categoryName": "온라인 학습"
+			}
+		],
+		"postId": 1004,
+		"title": "최고의 온라인 학습 플랫폼",
+		"author": "박지연",
+		"createdAt": "2024-11-04",
+		"content": "온라인 학습은 빠르게 성장하고 있습니다. 이 글에서는 코딩부터 자기계발까지 다양한 주제를 다루는 최고의 플랫폼을 리뷰합니다."
+	},
+	{
+		"categoryHier": [
+			{
+				"categoryId": 5,
+				"categoryName": "여행"
+			},
+			{
+				"categoryId": 501,
+				"categoryName": "모험"
+			}
+		],
+		"postId": 1005,
+		"title": "알프스 탐험 가이드",
+		"author": "최영수",
+		"createdAt": "2024-11-05",
+		"content": "알프스는 숨막히는 풍경과 짜릿한 모험을 제공합니다. 이 글에서는 꼭 방문해야 할 명소와 탐험 팁을 공유합니다."
+	},
+	{
+		"categoryHier": [
+			{
+				"categoryId": 1,
+				"categoryName": "기술"
+			},
+			{
+				"categoryId": 102,
+				"categoryName": "AI와 머신러닝"
+			}
+		],
+		"postId": 1006,
+		"title": "헬스케어에서의 AI의 미래",
+		"author": "정우성",
+		"createdAt": "2024-11-06",
+		"content": "AI는 헬스케어를 혁신적인 방향으로 변화시키고 있습니다. 이 글에서는 현재의 활용 사례와 AI 혁신의 미래를 살펴봅니다."
+	},
+	{
+		"categoryHier": [
+			{
+				"categoryId": 3,
+				"categoryName": "엔터테인먼트"
+			},
+			{
+				"categoryId": 302,
+				"categoryName": "음악"
+			}
+		],
+		"postId": 1007,
+		"title": "2024년 최고의 앨범 10선",
+		"author": "이지현",
+		"createdAt": "2024-11-07",
+		"content": "음악 팬들을 위한 2024년을 정의한 최고의 앨범 10개를 소개합니다. 다양한 장르와 아티스트를 만나보세요."
+	},
+	{
+		"categoryHier": [
+			{
+				"categoryId": 4,
+				"categoryName": "교육"
+			},
+			{
+				"categoryId": 402,
+				"categoryName": "공부 팁"
+			}
+		],
+		"postId": 1008,
+		"title": "시험에서 좋은 성적 받는 법",
+		"author": "한동훈",
+		"createdAt": "2024-11-08",
+		"content": "효과적으로 공부하는 것은 시험 성적에 큰 차이를 만듭니다. 이 글에서는 시험 준비와 스트레스 관리 전략을 공유합니다."
+	},
+	{
+		"categoryHier": [
+			{
+				"categoryId": 5,
+				"categoryName": "여행"
+			},
+			{
+				"categoryId": 502,
+				"categoryName": "문화 체험"
+			}
+		],
+		"postId": 1009,
+		"title": "일본 문화 속으로",
+		"author": "윤지영",
+		"createdAt": "2024-11-09",
+		"content": "일본은 독특한 문화 체험을 제공합니다. 이 글에서는 다도부터 스모 경기까지 일본 전통에 몰입하는 방법을 소개합니다."
+	},
+	{
+		"categoryHier": [
+			{
+				"categoryId": 2,
+				"categoryName": "라이프스타일"
+			},
+			{
+				"categoryId": 202,
+				"categoryName": "마음챙김"
+			}
+		],
+		"postId": 1010,
+		"title": "마음챙김의 예술",
+		"author": "배수진",
+		"createdAt": "2024-11-10",
+		"content": "마음챙김은 현재 순간에 집중하는 삶의 방식입니다. 일상에 마음챙김을 도입하는 간단한 방법들을 이 글에서 확인해보세요."
+	}
+]
