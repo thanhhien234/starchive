@@ -30,8 +30,19 @@ function CreatePost() {
         categories={data?.data as Category[]}
         onCategorySelect={(id) => handlePostChange('categoryId', id)}
       />
-      <PostTitleInput placeholder="제목을 입력하세요" />
-      <MarkdownEditor />
+      <PostTitleInput
+        placeholder="제목을 입력하세요"
+        value={post.title}
+        onChange={(e) => handlePostChange('title', e.target.value)} 
+      />
+      <MarkdownEditor
+        markdown={post.content}
+        onChange={(value) => handlePostChange('content', value)}
+        onIconButtonClick={handleIconButtonClick}
+        textareaRef={textareaRef}
+        fileInputRef={fileInputRef}
+        onFileUpload={handleFileUpload}
+      />
       <TagWrapper/>
       <NicknamePasswordInput
         author={post.author}
