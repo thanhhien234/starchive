@@ -19,7 +19,10 @@ function CreatePost() {
 
   return (
     <CreatePostContainer>
-      <CategorySelector categories={data?.data as Category[]} />
+      <CategorySelector
+        categories={data?.data as Category[]}
+        onCategorySelect={(id) => handlePostChange('categoryId', id)}
+      />
       <PostTitleInput placeholder="제목을 입력하세요" />
       <MarkdownEditor />
       <TagWrapper/>
