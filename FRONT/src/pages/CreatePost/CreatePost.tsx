@@ -26,7 +26,12 @@ function CreatePost() {
       <PostTitleInput placeholder="제목을 입력하세요" />
       <MarkdownEditor />
       <TagWrapper/>
-      <NicknamePasswordInput />
+      <NicknamePasswordInput
+        author={post.author}
+        password={post.password}
+        onAuthorChange={(value) => handlePostChange('author', value)}
+        onPasswordChange={(value) => handlePostChange('password', value)}
+      />
       <ButtonGroup>
         <Button content='임시저장' type='Primary' handleButtonClick={()=>{}} />
         <Button content='저장' type='Primary' handleButtonClick={handleSaveButtonClick} />
