@@ -9,9 +9,16 @@ import NicknamePasswordInput from "./components/NicknamePasswordInput/NicknamePa
 import TagWrapper from "./components/TagWrapper/TagWrapper";
 import MarkdownEditor from "./components/MarkdownEditor/MarkdownEditor";
 import useCreatePost from "./hooks/useCreatePost";
+import useMarkdownEditor from "./hooks/useMarkdownEditor";
 
 function CreatePost() {
   const { post, handlePostChange, handleSaveButtonClick } = useCreatePost();
+  const { handleIconButtonClick, handleFileUpload, textareaRef, fileInputRef } = useMarkdownEditor({
+    initialMarkdown: post.content,
+    imageIds: post.imageIds,
+    onContentChange: (value: string) => handlePostChange('content', value),
+    onImageIdsChange: (value: number[]) => handlePostChange('imageIds', value),
+  });
   const { data } = useQuery<ApiResponse<Category[]>>({
     queryKey: ["categories"],
     queryFn: () => fetchCategories(),
