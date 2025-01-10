@@ -30,6 +30,7 @@ public class PostController {
     }
 
     @GetMapping("/posts")
+    @Operation(summary = "게시글 목록 조회")
     public ResponseEntity<?> findPosts(
             @RequestParam(name = "category", required = false) Long category,
             @RequestParam(name = "tag", required = false) Long tag,
