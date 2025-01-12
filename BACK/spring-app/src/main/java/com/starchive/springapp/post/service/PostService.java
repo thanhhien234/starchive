@@ -7,8 +7,8 @@ import com.starchive.springapp.hashtag.service.HashTagService;
 import com.starchive.springapp.image.service.PostImageService;
 import com.starchive.springapp.post.domain.Post;
 import com.starchive.springapp.post.dto.PostCreateRequest;
-import com.starchive.springapp.post.dto.PostDto;
 import com.starchive.springapp.post.dto.PostListResponse;
+import com.starchive.springapp.post.dto.PostSimpleDto;
 import com.starchive.springapp.post.repository.PostRepository;
 import com.starchive.springapp.posthashtag.domain.PostHashTag;
 import com.starchive.springapp.posthashtag.service.PostHashTagService;
@@ -71,7 +71,7 @@ public class PostService {
 
         Page<Post> posts = postRepository.findManyByCategoryIds(categoryIds, postIds, pageable);
 
-        Page<PostDto> dtoPage = getPostDtos(posts);
+        Page<PostSimpleDto> dtoPage = getPostDtos(posts);
 
         return PostListResponse.from(dtoPage);
     }
@@ -89,10 +89,10 @@ public class PostService {
     }
 
 
-    private Page<PostDto> getPostDtos(Page<Post> posts) {
-        Page<PostDto> dtoPage = posts.map(post -> {
+    private Page<PostSimpleDto> getPostDtos(Page<Post> posts) {
+        Page<PostSimpleDto> dtoPage = posts.map(post -> {
             List<HashTagResponse> hashTagDtos = hashTagService.findManyByPost(post.getId());
-            return PostDto.of(post, hashTagDtos);
+            return PostSimpleDto.of(post, hashTagDtos);
         });
         return dtoPage;
     }
