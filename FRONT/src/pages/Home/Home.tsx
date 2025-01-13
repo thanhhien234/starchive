@@ -1,10 +1,11 @@
 import PostItem from "./components/PostItem/PostItem";
 import PagingButton from "@_components/PagingButton/PagingButton";
-import { PagingButtonWrapper, PostItemContainer, Wrapper } from "./Home.style";
+import { ButtonWrapper, PagingButtonWrapper, PostItemContainer, Wrapper } from "./Home.style";
 import { Post } from "../../types/post";
 import TagWrapper from "@_components/TagWrapper/TagWrapper";
 import { useTag } from "@_components/TagWrapper/useTag";
 import { useNavigate, useParams, useSearchParams } from "react-router-dom";
+import Button from "@_components/Button/Button";
 
 function Home() {
   const navigate = useNavigate();
@@ -21,6 +22,9 @@ function Home() {
 
   return (
     <Wrapper>
+      <ButtonWrapper>
+        <Button content='작성하기' type='Primary' handleButtonClick={() => navigate('/create-post')} />
+      </ButtonWrapper>
       <TagWrapper tagList={tagList} onTagClick={handleTagClick} selectedTag={selectedTag}/>
       <PostItemContainer>
         {
