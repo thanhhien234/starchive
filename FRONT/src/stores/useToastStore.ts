@@ -11,7 +11,7 @@ interface ToastState {
 
 const useToastStore = create<ToastState>((set) => ({
   message: '',
-  duration: 250000,
+  duration: 2500,
   isVisible: false,
   setMessage: (message: string) => set({ message }),
   setDuration: (duration: number) => set({ duration }),
