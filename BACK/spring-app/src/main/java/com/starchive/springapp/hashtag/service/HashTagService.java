@@ -57,7 +57,6 @@ public class HashTagService {
     }
 
     public List<HashTagResponse> findManyByPost(Long postId) {
-        //postService.findOne(postId);
 
         return hashTagRepository.findAllByPostId(postId).stream().map(HashTagResponse::from).toList();
     }

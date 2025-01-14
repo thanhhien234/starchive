@@ -7,8 +7,10 @@ import com.starchive.springapp.hashtag.service.HashTagService;
 import com.starchive.springapp.image.service.PostImageService;
 import com.starchive.springapp.post.domain.Post;
 import com.starchive.springapp.post.dto.PostCreateRequest;
+import com.starchive.springapp.post.dto.PostDto;
 import com.starchive.springapp.post.dto.PostListResponse;
 import com.starchive.springapp.post.dto.PostSimpleDto;
+import com.starchive.springapp.post.exception.PostNotFoundException;
 import com.starchive.springapp.post.repository.PostRepository;
 import com.starchive.springapp.posthashtag.domain.PostHashTag;
 import com.starchive.springapp.posthashtag.service.PostHashTagService;
@@ -43,8 +45,12 @@ public class PostService {
 
     }
 
-    public Post findOne(Long postId) {
-        return postRepository.findById(postId).orElseThrow();
+    public PostDto findOne(Long postId) {
+        Post post = postRepository.findById(postId).orElseThrow(PostNotFoundException::new);
+
+        List<HashTagResponse> hashTagResponses = hashTagService.findManyByPost(post.getId());
+
+        return PostDto.of(post, hashTagResponses);
     }
 
     //todo: fetch join (양방향 연관관계)
