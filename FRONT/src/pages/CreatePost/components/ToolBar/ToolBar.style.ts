@@ -2,6 +2,7 @@ import styled from "styled-components";
 
 export const ToolBarContainer = styled.div`
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-between;
   align-items: center;
   padding: 4px 16px;
@@ -47,7 +48,7 @@ export const Separator = styled.div`
 `
 
 export const ModeToggle = styled.span<{ $active: boolean }>`
-  padding: 8px;
+  padding: 4px 8px;
   border-radius: 16px;
   cursor: pointer;
   font-weight: ${({ $active }) => ($active ? 'bold' : 'normal')};

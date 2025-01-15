@@ -1,7 +1,7 @@
 import { Group, IconButton, ModeToggle, Separator, ToolBarContainer } from "./ToolBar.style";
 import boldIcon from "@_assets/icons/toolbar/bold.svg";
 import italicIcon from "@_assets/icons/toolbar/italic.svg";
-import underlineIcon from "@_assets/icons/toolbar/underline.svg";
+import strikethroughIcon from "@_assets/icons/toolbar/strikethrough.svg"
 import addPhotoIcon from "@_assets/icons/toolbar/add-photo.svg";
 import quoteIcon from "@_assets/icons/toolbar/quote.svg";
 import codeIcon from "@_assets/icons/toolbar/code.svg";
@@ -24,8 +24,8 @@ function ToolBar({ viewMode, setViewMode, onIconButtonClick, handleAddPhotoClick
         <IconButton onClick={() => onIconButtonClick("italic")}>
           <img src={italicIcon} alt="기울이기" />
         </IconButton>
-        <IconButton onClick={() => onIconButtonClick("underline")}>
-          <img src={underlineIcon} alt="밑줄" />
+        <IconButton onClick={() => onIconButtonClick("strikethrough")}>
+          <img src={strikethroughIcon} alt="취소선" />
         </IconButton>
         <Separator />
         <IconButton onClick={handleAddPhotoClick}>
