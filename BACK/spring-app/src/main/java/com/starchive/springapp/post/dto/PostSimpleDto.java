@@ -10,7 +10,7 @@ import java.util.List;
 import lombok.Data;
 
 @Data
-public class PostDto {
+public class PostSimpleDto {
     private List<CategorySimpleDto> categoryHier;
     private Long postId;
     private String title;
@@ -19,8 +19,8 @@ public class PostDto {
     private String content;
     private List<HashTagResponse> hashTags;
 
-    public static PostDto of(Post post, List<HashTagResponse> hashTagDtos) {
-        PostDto postDto = new PostDto();
+    public static PostSimpleDto of(Post post, List<HashTagResponse> hashTagDtos) {
+        PostSimpleDto postDto = new PostSimpleDto();
 
         postDto.categoryHier = setCategoryHier(post.getCategory());
 
@@ -28,12 +28,19 @@ public class PostDto {
         postDto.title = post.getTitle();
         postDto.author = post.getAuthor();
         postDto.createdAt = post.getCreateAt();
-        postDto.content = post.getContent();
+        postDto.content = setContent(post.getContent());
 
         postDto.hashTags = hashTagDtos;
 
         return postDto;
 
+    }
+
+    private static String setContent(String content) {
+        if (content != null && content.length() > 350) {
+            return content.substring(0, 350);
+        }
+        return content;
     }
 
     private static List<CategorySimpleDto> setCategoryHier(Category category) {
@@ -51,4 +58,5 @@ public class PostDto {
         categoryHier.add(categoryDto);
         return categoryHier;
     }
+
 }

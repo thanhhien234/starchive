@@ -9,9 +9,9 @@ public class PostListResponse {
     private int currentPage;
     private int totalPages;
     private long totalCount;
-    private List<PostDto> posts;
+    private List<PostSimpleDto> posts;
 
-    public static PostListResponse from(Page<PostDto> dtoPage) {
+    public static PostListResponse from(Page<PostSimpleDto> dtoPage) {
         PostListResponse postListResponse = new PostListResponse();
         postListResponse.currentPage = dtoPage.getNumber();
         postListResponse.totalPages = dtoPage.getTotalPages();
