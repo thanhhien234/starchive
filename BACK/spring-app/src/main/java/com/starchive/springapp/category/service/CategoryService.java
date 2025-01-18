@@ -37,7 +37,7 @@ public class CategoryService {
         }
 
         Category parentCategory = categoryRepository.findById(categoryCreateRequest.getParentId())
-                .orElseThrow(CategoryNotFoundException::new);
+                .orElseThrow(() -> new CategoryNotFoundException("존재하지 않는 부모 카테고리"));
 
         Category category = new Category(categoryCreateRequest.getName(), parentCategory);
         categoryRepository.save(category);
