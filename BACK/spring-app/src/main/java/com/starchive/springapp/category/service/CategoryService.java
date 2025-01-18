@@ -1,7 +1,9 @@
 package com.starchive.springapp.category.service;
 
 import com.starchive.springapp.category.domain.Category;
+import com.starchive.springapp.category.dto.CategoryCreateRequest;
 import com.starchive.springapp.category.dto.CategoryDto;
+import com.starchive.springapp.category.exception.CategoryAlreadyExistsException;
 import com.starchive.springapp.category.exception.CategoryNotFoundException;
 import com.starchive.springapp.category.repository.CategoryRepository;
 import java.util.List;
@@ -23,4 +25,22 @@ public class CategoryService {
     }
 
 
+    public void create(CategoryCreateRequest categoryCreateRequest) {
+        categoryRepository.findByName(categoryCreateRequest.getName()).ifPresent(category -> {
+            throw new CategoryAlreadyExistsException();
+        });
+
+        if (categoryCreateRequest.getParentId() == null) {
+            Category category = new Category(categoryCreateRequest.getName(), null);
+            categoryRepository.save(category);
+            return;
+        }
+
+        Category parentCategory = categoryRepository.findById(categoryCreateRequest.getParentId())
+                .orElseThrow(CategoryNotFoundException::new);
+
+        Category category = new Category(categoryCreateRequest.getName(), parentCategory);
+        categoryRepository.save(category);
+
+    }
 }

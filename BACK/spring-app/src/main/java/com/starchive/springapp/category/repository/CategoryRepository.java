@@ -13,4 +13,6 @@ public interface CategoryRepository extends JpaRepository<Category, Long> {
 
     @Query("SELECT DISTINCT c FROM Category c LEFT JOIN FETCH c.children WHERE c.parent IS NULL")
     List<Category> findRootCategoriesWithChildren();
+
+    Optional<Category> findByName(@Param("name") String name);
 }
