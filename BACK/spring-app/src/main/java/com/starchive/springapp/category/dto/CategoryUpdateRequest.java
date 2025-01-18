@@ -10,7 +10,10 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class CategoryCreateRequest {
+public class CategoryUpdateRequest {
+    @NotNull
+    private Long categoryId;
+
     @Size(max = 100)
     @NotNull
     private String name;
