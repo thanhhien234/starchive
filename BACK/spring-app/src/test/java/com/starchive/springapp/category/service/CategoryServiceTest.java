@@ -6,7 +6,10 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import com.starchive.springapp.category.domain.Category;
 import com.starchive.springapp.category.dto.CategoryCreateRequest;
 import com.starchive.springapp.category.dto.CategoryDto;
+import com.starchive.springapp.category.dto.CategoryUpdateRequest;
+import com.starchive.springapp.category.dto.CategoryUpdateResponse;
 import com.starchive.springapp.category.exception.CategoryAlreadyExistsException;
+import com.starchive.springapp.category.exception.CategoryNotFoundException;
 import com.starchive.springapp.category.repository.CategoryRepository;
 import java.util.List;
 import org.junit.jupiter.api.Test;
@@ -98,4 +101,86 @@ class CategoryServiceTest {
     }
 
 
+    @Test
+    public void 카테고리_이름_수정_테스트() throws Exception {
+        //given
+        Category category = new Category("알고리즘", null);
+        categoryRepository.save(category);
+
+        CategoryUpdateRequest updateRequest = new CategoryUpdateRequest(category.getId(), "프로젝트", null);
+
+        //when
+        CategoryUpdateResponse updateResponse = categoryService.update(updateRequest);
+
+        Category findOne = categoryRepository.findById(category.getId()).get();
+        //then
+        assertThat(findOne.getName()).isEqualTo("프로젝트");
+    }
+
+    @Test
+    public void 카테고리_다른_부모로_수정_테스트() throws Exception {
+        //given
+        Category parent1 = new Category("프로젝트", null);
+        categoryRepository.save(parent1);
+        Category parent2 = new Category("알고리즘", null);
+        categoryRepository.save(parent2);
+        Category child = new Category("DP", parent1);
+        categoryRepository.save(child);
+
+        CategoryUpdateRequest updateRequest = new CategoryUpdateRequest(child.getId(), "DP", parent2.getId());
+
+        //when
+        CategoryUpdateResponse updateResponse = categoryService.update(updateRequest);
+
+        Category findOne = categoryRepository.findById(child.getId()).get();
+        //then
+        assertThat(findOne.getName()).isEqualTo("DP");
+        assertThat(findOne.getParent().getName()).isEqualTo("알고리즘");
+    }
+
+    @Test
+    public void 카테고리_루트카테고리로_수정_테스트() throws Exception {
+        //given
+        Category parent1 = new Category("알고리즘", null);
+        categoryRepository.save(parent1);
+        Category child = new Category("DP", parent1);
+        categoryRepository.save(child);
+
+        CategoryUpdateRequest updateRequest = new CategoryUpdateRequest(child.getId(), "DP", null);
+
+        //when
+        CategoryUpdateResponse updateResponse = categoryService.update(updateRequest);
+
+        Category findOne = categoryRepository.findById(child.getId()).get();
+        //then
+        assertThat(findOne.getName()).isEqualTo("DP");
+        assertThat(findOne.getParent()).isNull();
+    }
+
+    @Test
+    public void 카테고리_수정_이미_존재하는_이름예외_테스트() throws Exception {
+        //given
+        Category category = new Category("알고리즘", null);
+        categoryRepository.save(category);
+        Category category1 = new Category("프로젝트", null);
+        categoryRepository.save(category1);
+
+        CategoryUpdateRequest updateRequest = new CategoryUpdateRequest(category.getId(), "프로젝트", null);
+
+        //when
+        assertThatThrownBy(() -> categoryService.update(updateRequest)).isInstanceOf(
+                CategoryAlreadyExistsException.class);
+    }
+
+    @Test
+    public void 카테고리_수정_존재하지않는_부모카테고리로_수정_테스트() throws Exception {
+        //given
+        Category category = new Category("알고리즘", null);
+        categoryRepository.save(category);
+
+        CategoryUpdateRequest updateRequest = new CategoryUpdateRequest(category.getId(), "프로젝트", -1L);
+
+        //when
+        assertThatThrownBy(() -> categoryService.update(updateRequest)).isInstanceOf(CategoryNotFoundException.class);
+    }
 }
