@@ -2,6 +2,8 @@ package com.starchive.springapp.category.controller;
 
 import com.starchive.springapp.category.dto.CategoryCreateRequest;
 import com.starchive.springapp.category.dto.CategoryDto;
+import com.starchive.springapp.category.dto.CategoryUpdateRequest;
+import com.starchive.springapp.category.dto.CategoryUpdateResponse;
 import com.starchive.springapp.category.service.CategoryService;
 import com.starchive.springapp.global.dto.ResponseDto;
 import com.starchive.springapp.hashtag.dto.HashTagDto;
@@ -16,6 +18,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -47,5 +50,14 @@ public class CategoryController {
         categoryService.create(categoryCreateRequest);
 
         return ResponseEntity.noContent().build();
+    }
+
+    @PutMapping("/categories")
+    @Operation(summary = "카테고리 수정")
+    public ResponseEntity<ResponseDto<CategoryUpdateResponse>> updateCategory(
+            @Valid CategoryUpdateRequest categoryUpdateRequest) {
+        CategoryUpdateResponse updateResponse = categoryService.update(categoryUpdateRequest);
+
+        return ResponseEntity.ok(new ResponseDto<>(updateResponse));
     }
 }

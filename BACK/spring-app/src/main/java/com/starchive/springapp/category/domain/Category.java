@@ -44,9 +44,15 @@ public class Category {
         }
     }
 
-    private void changeParent(Category parent) {
+    public void changeName(String name) {
+        this.name = name;
+    }
+
+    public void changeParent(Category parent) {
         this.parent = parent;
-        parent.getChildren().add(this);
+        if (parent != null) {
+            parent.getChildren().add(this);
+        }
     }
 
 }
