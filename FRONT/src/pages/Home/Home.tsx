@@ -13,12 +13,13 @@ function Home() {
   const currentPage = page ? Number(page) : 1;
   const [searchParams ] = useSearchParams();
   const categoryId = searchParams.get('categoryId') ? Number(searchParams.get('categoryId')) : undefined;
+  const pageSize = searchParams.get('pageSize') ? Number(searchParams.get('pageSize')) : undefined;
   const {
     tagList,
     selectedTag,
-    posts, 
-    handleTagClick 
-  } = useTag({ categoryId, page });
+    posts,
+    handleTagClick
+  } = useTag({ categoryId, page, pageSize });
 
   return (
     <Wrapper>
