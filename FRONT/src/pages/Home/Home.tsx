@@ -1,6 +1,6 @@
 import PostItem from "./components/PostItem/PostItem";
 import PagingButton from "@_components/PagingButton/PagingButton";
-import { ButtonWrapper, PagingButtonWrapper, PostItemContainer, Wrapper } from "./Home.style";
+import { ButtonWrapper, PagingButtonWrapper, PostItemContainer, PostListWithTags, Wrapper } from "./Home.style";
 import { Post } from "../../types/post";
 import TagWrapper from "@_components/TagWrapper/TagWrapper";
 import { useTag } from "@_components/TagWrapper/useTag";
@@ -25,11 +25,11 @@ function Home() {
       <ButtonWrapper>
         <Button content='작성하기' type='Primary' handleButtonClick={() => navigate('/create-post')} />
       </ButtonWrapper>
-      <TagWrapper tagList={tagList} onTagClick={handleTagClick} selectedTag={selectedTag}/>
-      <PostItemContainer>
+      <PostListWithTags>
+        <PostItemContainer>
         {
-          posts.map((postItem: Post, i: number) => 
-            <PostItem 
+          posts.map((postItem: Post, i: number) =>
+            <PostItem
               title={postItem.title}
               createdAt={postItem.createdAt}
               content={postItem.content}
@@ -41,7 +41,9 @@ function Home() {
             />
           )
         }
-      </PostItemContainer>
+        </PostItemContainer>
+        <TagWrapper tagList={tagList} onTagClick={handleTagClick} selectedTag={selectedTag}/>
+      </PostListWithTags>
       <PagingButtonWrapper>
         <PagingButton
           totalPages={10}

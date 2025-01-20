@@ -12,6 +12,11 @@ export const ButtonWrapper = styled.div`
   margin-bottom: 10px;
 `;
 
+export const PostListWithTags = styled.div`
+  display: flex;
+  gap: 20px;
+`;
+
 export const PostItemContainer = styled.section`
   width: 100%;
 `;
