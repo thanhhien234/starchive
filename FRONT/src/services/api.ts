@@ -40,9 +40,12 @@ const createFetchRequest = (method: 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE')
     }
 
     const text = await res.text();
-    const data = text ? JSON.parse(text).data as T : null;
+    const parsedRes = text ? JSON.parse(text) : null;
 
-    if (data) return { data, status: res.status };
+    if (parsedRes) return {
+      data: parsedRes.data || parsedRes,
+      status: res.status
+    };
     return { status: res.status }; // response body가 없는 경우
   }
 
