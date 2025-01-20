@@ -6,6 +6,12 @@ export const Wrapper = styled.main`
   margin: auto;
 `;
 
+export const ButtonWrapper = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 10px;
+`;
+
 export const PostItemContainer = styled.section`
   width: 100%;
 `;

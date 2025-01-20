@@ -8,6 +8,7 @@ import Aside from '@_components/Aside/Aside'
 import useLoadingStore from './store/useLoadingStore';
 import LoadingModal from '@_components/LoadingModal/LoadingModal';
 import Post from './pages/Post/Post';
+import Toast from './pages/CreatePost/components/Toast/Toast'
 
 function App() {
   const { isLoading } = useLoadingStore();
@@ -22,6 +23,7 @@ function App() {
       </Routes>
       <Footer />
       <LoadingModal isLoading={isLoading} />
+      <Toast />
     </>
   )
 }

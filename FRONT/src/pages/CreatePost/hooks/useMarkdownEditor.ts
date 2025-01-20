@@ -67,6 +67,7 @@ function useMarkdownEditor({
     const actions: Record<string, { prefix: string; suffix: string; placeholder: string }> = {
       bold: { prefix: "**", suffix: "**", placeholder: "텍스트" },
       italic: { prefix: "_", suffix: "_", placeholder: "텍스트" },
+      strikethrough: { prefix: "~~", suffix: "~~", placeholder: "텍스트" },
       quote: { prefix: "> ", suffix: "", placeholder: "인용구" },
       link: { prefix: "[", suffix: "](https://)", placeholder: "링크 텍스트" },
       code: { prefix: "```plaintext\n", suffix: "\n```", placeholder: "코드" },

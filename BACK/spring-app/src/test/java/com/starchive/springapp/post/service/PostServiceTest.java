@@ -10,9 +10,13 @@ import com.starchive.springapp.image.domain.PostImage;
 import com.starchive.springapp.image.repository.PostImageRepository;
 import com.starchive.springapp.post.domain.Post;
 import com.starchive.springapp.post.dto.PostCreateRequest;
+import com.starchive.springapp.post.dto.PostDto;
+import com.starchive.springapp.post.dto.PostListResponse;
 import com.starchive.springapp.post.repository.PostRepository;
 import com.starchive.springapp.posthashtag.domain.PostHashTag;
 import com.starchive.springapp.posthashtag.repository.PostHashTagRepository;
+import jakarta.persistence.EntityManager;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.Test;
@@ -40,6 +44,9 @@ class PostServiceTest {
 
     @Autowired
     PostService postService;
+
+    @Autowired
+    EntityManager em;
 
     @Test
     public void 게시글_작성_통합_테스트() throws Exception {
@@ -74,5 +81,52 @@ class PostServiceTest {
         assertThat(postHashTags.size()).isEqualTo(2);
 
     }
+
+    @Test
+    public void 게시글_전체조회_통합_테스트() throws Exception {
+        //given
+        Category category = new Category("카테고리", null);
+        categoryRepository.save(category);
+
+        Post post1 = new Post(null, "title1", "content", "author1", "123", LocalDateTime.now(), category);
+        Post post2 = new Post(null, "title2", "content", "author2", "123", LocalDateTime.now(), category);
+        postRepository.saveAll(List.of(post1, post2));
+
+        HashTag hashTag = new HashTag("tag1");
+        hashTagRepository.save(hashTag);
+        postHashTagRepository.save(new PostHashTag(post1, hashTag));
+
+        //when
+        PostListResponse response = postService.findPosts(category.getId(), null, 0, 10);
+
+        //then
+        assertThat(response.getPosts()).hasSize(2);
+        assertThat(response.getPosts()).extracting("title").containsExactlyInAnyOrder("title1", "title2");
+        assertThat(response.getPosts().get(0).getHashTags()).extracting("name").containsExactly("tag1");
+    }
+
+    @Test
+    public void 게시글_상세조회_통합_테스트() throws Exception {
+        //given
+        Category category = new Category("카테고리", null);
+        categoryRepository.save(category);
+
+        Post post1 = new Post(null, "title1", "content", "author1", "123", LocalDateTime.now(), category);
+        postRepository.save(post1);
+        HashTag hashTag = new HashTag("tag1");
+        hashTagRepository.save(hashTag);
+
+        postHashTagRepository.save(new PostHashTag(post1, hashTag));
+
+        em.flush();
+        em.clear();
+        //when
+        PostDto findOne = postService.findOne(post1.getId());
+
+        //then
+        assertThat(findOne.getTitle()).isEqualTo(post1.getTitle());
+
+    }
+
 
 }
