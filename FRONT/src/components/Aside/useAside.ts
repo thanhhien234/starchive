@@ -17,7 +17,7 @@ function useAside() {
     setActiveCategoryId(categoryId);
     navigate(
       categoryId
-        ? `/1/categoryId=${categoryId}`
+        ? `/1?categoryId=${categoryId}`
         : `/`
     );
     setIsAsideOpen(false);

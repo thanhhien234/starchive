@@ -36,10 +36,10 @@ function PostItem({ title, content, createdAt, userName, userIntro, categoryHier
       <TagContainer>
         {
           categoryHier?.map(({ categoryId, categoryName }, i) => 
-            <>
+            <div key={i}>
               {i !== 0 ? <span> &gt; </span> : null}
               <Link to={`/1?categoryId=${categoryId}`}>{categoryName}</Link>
-            </>
+            </div>
           )
         }
       </TagContainer>
