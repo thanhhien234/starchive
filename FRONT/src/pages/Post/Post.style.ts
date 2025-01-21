@@ -3,7 +3,7 @@ import { styled } from "styled-components";
 export const PostContainer = styled.section`
   display: flex;
   flex-direction: column;
-  padding: 30px 20pxs;
+  padding: 30px 20px;
   margin: auto;
   gap: 20px;
   max-width: 1080px;
