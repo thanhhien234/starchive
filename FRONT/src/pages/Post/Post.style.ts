@@ -1,4 +1,5 @@
 import { styled } from "styled-components";
+import { HashTagContainer } from "../Home/components/PostItem/PostItem.style";
 
 export const PostContainer = styled.section`
   display: flex;
@@ -20,4 +21,15 @@ export const ButtonContainer = styled.div`
   display: flex;
   justify-content: flex-end;
   gap: 10px;
+`;
+
+export const Line = styled.div`
+  width: 100%;
+  height: 1px;
+  background-color: #DEE1E1;
+  margin: 15px 0;
+`;
+
+export const PostHashTagContainer = styled(HashTagContainer)`
+  margin-top: 20px;
 `;
