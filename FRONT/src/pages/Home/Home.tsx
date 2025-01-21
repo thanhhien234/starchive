@@ -1,7 +1,7 @@
 import PostItem from "./components/PostItem/PostItem";
 import PagingButton from "@_components/PagingButton/PagingButton";
 import { ButtonWrapper, PagingButtonWrapper, PostItemContainer, PostListWithTags, Wrapper } from "./Home.style";
-import { Post } from "../../types/post";
+import { PostParams } from "../../types/post";
 import TagWrapper from "@_components/TagWrapper/TagWrapper";
 import { useTag } from "@_components/TagWrapper/useTag";
 import { useNavigate, useParams, useSearchParams } from "react-router-dom";
@@ -29,8 +29,9 @@ function Home() {
       <PostListWithTags>
         <PostItemContainer>
         {
-          posts.map((postItem: Post, i: number) =>
+          posts.map((postItem: PostParams, i: number) =>
             <PostItem
+              postId={postItem.postId}
               title={postItem.title}
               createdAt={postItem.createdAt}
               content={postItem.content}
