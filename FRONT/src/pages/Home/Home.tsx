@@ -18,8 +18,9 @@ function Home() {
     tagList,
     selectedTag,
     posts,
-    handleTagClick
-  } = useTag({ categoryId, page, pageSize });
+    handleTagClick,
+    totalPages,
+  } = useTag({ categoryId, page: currentPage - 1, pageSize });
 
   return (
     <Wrapper>
@@ -47,7 +48,7 @@ function Home() {
       </PostListWithTags>
       <PagingButtonWrapper>
         <PagingButton
-          totalPages={10}
+          totalPages={totalPages}
           currentPage={currentPage}
           setCurrentPage={(newPage: number) => navigate(`/${newPage}${searchParams.toString()}`)}
         />

@@ -35,7 +35,7 @@ export const useTag = ({ categoryId, pageSize, page }: UseTagParams = {}) => {
       categoryId, 
       selectedTag, 
       pageSize || 10, 
-      page || 1
+      page || 0
     ],
     queryFn: () => 
       fetchPostList(
