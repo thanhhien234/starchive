@@ -14,8 +14,10 @@ import {
   ContentContainer } 
   from './PostItem.style';
 import { Tag } from '../../../../components/TagWrapper/TagWrapper.style';
+import { useNavigate } from 'react-router-dom';
 
 interface PostItemProps {
+  postId: number,
   title: string,
   content: string,
   createdAt: string,
@@ -31,7 +33,8 @@ interface PostItemProps {
   }[]
 }
 
-function PostItem({ title, content, createdAt, userName, userIntro, categoryHier, hashTags }: PostItemProps) {
+function PostItem({ postId, title, content, createdAt, userName, userIntro, categoryHier, hashTags }: PostItemProps) {
+  const navigate = useNavigate();
   return (
     <Wrapper>
       <TagContainer>
@@ -44,7 +47,7 @@ function PostItem({ title, content, createdAt, userName, userIntro, categoryHier
           )
         }
       </TagContainer>
-      <ContentContainer>
+      <ContentContainer onClick={() => navigate(`/post/${postId}`)}>
         <Title>{ title }</Title>
         <UserProfileWrapper>
           <UserImage>

@@ -19,7 +19,7 @@ function App() {
       <Routes>
         <Route path='/:page?' element={<Home />} />
         <Route path='/create-post' element={<CreatePost />} />
-        <Route path='/post' element={<Post />} />
+        <Route path='/post/:postId' element={<Post />} />
       </Routes>
       <Footer />
       <LoadingModal isLoading={isLoading} />
