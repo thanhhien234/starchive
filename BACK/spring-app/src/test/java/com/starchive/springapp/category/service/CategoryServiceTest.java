@@ -11,10 +11,15 @@ import com.starchive.springapp.category.dto.CategoryUpdateResponse;
 import com.starchive.springapp.category.exception.CategoryAlreadyExistsException;
 import com.starchive.springapp.category.exception.CategoryNotFoundException;
 import com.starchive.springapp.category.repository.CategoryRepository;
+import com.starchive.springapp.post.domain.Post;
+import com.starchive.springapp.post.repository.PostRepository;
+import jakarta.persistence.EntityManager;
+import java.time.LocalDateTime;
 import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.jdbc.Sql;
 import org.springframework.transaction.annotation.Transactional;
 
 @SpringBootTest
@@ -24,6 +29,10 @@ class CategoryServiceTest {
     CategoryRepository categoryRepository;
     @Autowired
     CategoryService categoryService;
+    @Autowired
+    PostRepository postRepository;
+    @Autowired
+    EntityManager em;
 
     @Test
     void 전체_목록_조회_테스트() {
@@ -183,4 +192,69 @@ class CategoryServiceTest {
         //when
         assertThatThrownBy(() -> categoryService.update(updateRequest)).isInstanceOf(CategoryNotFoundException.class);
     }
+
+    @Test
+    @Sql(statements = "INSERT INTO Categories (categoryId, name) VALUES (0, 'Default Category')")
+    public void 자식_카테고리_삭제_테스트() throws Exception {
+        //given
+        Category parent1 = new Category("알고리즘", null);
+        categoryRepository.save(parent1);
+        Category child = new Category("DP", parent1);
+        categoryRepository.save(child);
+        Category child2 = new Category("greedy", parent1);
+        categoryRepository.save(child2);
+        Post post1 = new Post(null, "title1", "content", "author1", "123", LocalDateTime.now(), child);
+        postRepository.save(post1);
+
+        //when
+        em.flush();
+        em.clear();
+        categoryService.delete(child.getId());
+        em.flush();
+        em.clear();
+        post1 = postRepository.findById(post1.getId()).orElseThrow();
+        List<Category> categories = categoryRepository.findAll();
+        for (Category category : categories) {
+            System.out.println(category.getName());
+        }
+
+        //then
+        assertThat(categories.size()).isEqualTo(3);
+        assertThat(post1.getCategory().getId()).isEqualTo(0);
+    }
+
+    @Test
+    @Sql(statements = "INSERT INTO Categories (categoryId, name) VALUES (0, 'Default Category')")
+    public void 부모_카테고리_삭제_테스트() throws Exception {
+        //given
+        Category parent1 = new Category("알고리즘", null);
+        categoryRepository.save(parent1);
+        Category child = new Category("DP", parent1);
+        categoryRepository.save(child);
+        Category child2 = new Category("greedy", parent1);
+        categoryRepository.save(child2);
+        Post post1 = new Post(null, "title1", "content", "author1", "123", LocalDateTime.now(), parent1);
+        Post post2 = new Post(null, "title1", "content", "author1", "123", LocalDateTime.now(), child);
+        Post post3 = new Post(null, "title1", "content", "author1", "123", LocalDateTime.now(), child2);
+        postRepository.save(post1);
+        postRepository.save(post2);
+        postRepository.save(post3);
+
+        //when
+        categoryService.delete(parent1.getId());
+
+        em.flush();
+        em.clear();
+        post1 = postRepository.findById(post1.getId()).orElseThrow();
+        post2 = postRepository.findById(post2.getId()).orElseThrow();
+        post3 = postRepository.findById(post3.getId()).orElseThrow();
+
+        //then
+        assertThat(categoryRepository.findAll().size()).isEqualTo(1);
+        assertThat(post1.getCategory().getId()).isEqualTo(0);
+        assertThat(post2.getCategory().getId()).isEqualTo(0);
+        assertThat(post3.getCategory().getId()).isEqualTo(0);
+    }
+
+
 }
