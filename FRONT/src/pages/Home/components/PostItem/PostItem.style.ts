@@ -83,3 +83,10 @@ export const HashTagContainer = styled.div`
   display: flex;
   gap: 5px;
 `;
+
+export const ContentContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  cursor: pointer;
+`;

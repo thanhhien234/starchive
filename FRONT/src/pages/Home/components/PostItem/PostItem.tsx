@@ -10,7 +10,8 @@ import {
   UserName, 
   UserNameWrapper, 
   UserProfileWrapper, 
-  Wrapper } 
+  Wrapper,
+  ContentContainer } 
   from './PostItem.style';
 import { Tag } from '../../../../components/TagWrapper/TagWrapper.style';
 
@@ -43,24 +44,22 @@ function PostItem({ title, content, createdAt, userName, userIntro, categoryHier
           )
         }
       </TagContainer>
-      <Link to="#">
+      <ContentContainer>
         <Title>{ title }</Title>
-      </Link>
-      <UserProfileWrapper>
-        <UserImage>
-          <img src="https://avatars.githubusercontent.com/u/95044821?v=4" alt="profile" width="100%" />
-        </UserImage>
-        <UserInfoWrapper>
-          <UserNameWrapper>
-            <UserName>{ userName }</UserName>
-            <SubInfo>{ createdAt }</SubInfo>
-          </UserNameWrapper>
-          <SubInfo>{ userIntro }</SubInfo>
-        </UserInfoWrapper>
-      </UserProfileWrapper>
-      <Link to="#">
+        <UserProfileWrapper>
+          <UserImage>
+            <img src="https://avatars.githubusercontent.com/u/95044821?v=4" alt="profile" width="100%" />
+          </UserImage>
+          <UserInfoWrapper>
+            <UserNameWrapper>
+              <UserName>{ userName }</UserName>
+              <SubInfo>{ createdAt }</SubInfo>
+            </UserNameWrapper>
+            <SubInfo>{ userIntro }</SubInfo>
+          </UserInfoWrapper>
+        </UserProfileWrapper>
         <Content>{ content }</Content>
-      </Link>
+      </ContentContainer>
       <HashTagContainer>
         {hashTags.map(tag => (
           <Tag key={tag.hashTagId} $isSelected={false}>{ '#' + tag.name }</Tag>
