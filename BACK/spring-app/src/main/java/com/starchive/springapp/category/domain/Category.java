@@ -2,6 +2,7 @@ package com.starchive.springapp.category.domain;
 
 import static jakarta.persistence.FetchType.LAZY;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -33,7 +34,7 @@ public class Category {
     @Column(length = 100)
     String name;
 
-    @OneToMany(mappedBy = "parent", fetch = LAZY)
+    @OneToMany(mappedBy = "parent", fetch = LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Category> children = new ArrayList<>();
 
     public Category(String name, Category parent) {

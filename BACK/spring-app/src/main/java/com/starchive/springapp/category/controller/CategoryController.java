@@ -15,6 +15,7 @@ import jakarta.validation.constraints.Null;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -59,5 +60,12 @@ public class CategoryController {
         CategoryUpdateResponse updateResponse = categoryService.update(categoryUpdateRequest);
 
         return ResponseEntity.ok(new ResponseDto<>(updateResponse));
+    }
+
+    @DeleteMapping("/categories/{categoryId}")
+    @Operation(summary = "카테고리 삭제")
+    public ResponseEntity<Null> deleteCategory(@PathVariable("categoryId") Long categoryId) {
+        categoryService.delete(categoryId);
+        return ResponseEntity.noContent().build();
     }
 }

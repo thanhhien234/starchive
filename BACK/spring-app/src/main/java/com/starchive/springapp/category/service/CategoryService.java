@@ -8,6 +8,8 @@ import com.starchive.springapp.category.dto.CategoryUpdateResponse;
 import com.starchive.springapp.category.exception.CategoryAlreadyExistsException;
 import com.starchive.springapp.category.exception.CategoryNotFoundException;
 import com.starchive.springapp.category.repository.CategoryRepository;
+import com.starchive.springapp.post.repository.PostRepository;
+import java.util.ArrayList;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -18,6 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 public class CategoryService {
     private final CategoryRepository categoryRepository;
+    private final PostRepository postRepository;
 
     public List<CategoryDto> findAll() {
         List<Category> rootCateGories = categoryRepository.findRootCategoriesWithChildren();
@@ -63,6 +66,27 @@ public class CategoryService {
         updateParentCategory(categoryUpdateRequest, category);
 
         return CategoryUpdateResponse.from(category);
+    }
+
+    public void delete(Long id) {
+        if (id == 0) {
+            throw new RuntimeException("삭제할 수 없는 카테고리입니다.");
+        }
+        Category category = categoryRepository.findByIdWithParentAndChildren(id)
+                .orElseThrow(CategoryNotFoundException::new);
+
+        List<Long> categoryIds = new ArrayList<>();
+        categoryIds.add(category.getId());
+
+        if (!category.getChildren().isEmpty()) {
+            for (Category child : category.getChildren()) {
+                categoryIds.add(child.getId());
+            }
+        }
+
+        postRepository.bulkUpdateToNoneCategory(categoryIds);
+
+        categoryRepository.deleteById(category.getId());
     }
 
     private Category updateParentCategory(CategoryUpdateRequest categoryUpdateRequest, Category category) {
