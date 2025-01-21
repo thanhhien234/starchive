@@ -70,6 +70,8 @@ export const Content = styled.p`
 
 export const TagContainer = styled.span`
   color: var(--point-color);
+  display: flex;
+  gap: 5px;
 
   & a {
     color: var(--point-color);
