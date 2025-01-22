@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { fetchPostList } from "@_services/postApi";
 import { fetchAllTagList, fetchTagListByCategory } from "@_services/tagApi";
-import { Post } from "../../types/post";
+import { PostParams } from "../../types/post";
 import { ApiResponse } from "../../services/api";
 import { Tag } from "../../types/tag";
 
@@ -28,7 +28,7 @@ export const useTag = ({ categoryId, pageSize, page }: UseTagParams = {}) => {
     currentPage: number,
     totalPages: number,
     totalCount: number,
-    posts: Post[]
+    posts: PostParams[]
   }>>({
     queryKey: [
       "postData", 

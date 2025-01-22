@@ -10,11 +10,14 @@ import {
   UserName, 
   UserNameWrapper, 
   UserProfileWrapper, 
-  Wrapper } 
+  Wrapper,
+  ContentContainer } 
   from './PostItem.style';
 import { Tag } from '../../../../components/TagWrapper/TagWrapper.style';
+import { useNavigate } from 'react-router-dom';
 
 interface PostItemProps {
+  postId: number,
   title: string,
   content: string,
   createdAt: string,
@@ -30,7 +33,8 @@ interface PostItemProps {
   }[]
 }
 
-function PostItem({ title, content, createdAt, userName, userIntro, categoryHier, hashTags }: PostItemProps) {
+function PostItem({ postId, title, content, createdAt, userName, userIntro, categoryHier, hashTags }: PostItemProps) {
+  const navigate = useNavigate();
   return (
     <Wrapper>
       <TagContainer>
@@ -43,24 +47,22 @@ function PostItem({ title, content, createdAt, userName, userIntro, categoryHier
           )
         }
       </TagContainer>
-      <Link to="#">
+      <ContentContainer onClick={() => navigate(`/post/${postId}`)}>
         <Title>{ title }</Title>
-      </Link>
-      <UserProfileWrapper>
-        <UserImage>
-          <img src="https://avatars.githubusercontent.com/u/95044821?v=4" alt="profile" width="100%" />
-        </UserImage>
-        <UserInfoWrapper>
-          <UserNameWrapper>
-            <UserName>{ userName }</UserName>
-            <SubInfo>{ createdAt }</SubInfo>
-          </UserNameWrapper>
-          <SubInfo>{ userIntro }</SubInfo>
-        </UserInfoWrapper>
-      </UserProfileWrapper>
-      <Link to="#">
+        <UserProfileWrapper>
+          <UserImage>
+            <img src="https://avatars.githubusercontent.com/u/95044821?v=4" alt="profile" width="100%" />
+          </UserImage>
+          <UserInfoWrapper>
+            <UserNameWrapper>
+              <UserName>{ userName }</UserName>
+              <SubInfo>{ createdAt }</SubInfo>
+            </UserNameWrapper>
+            <SubInfo>{ userIntro }</SubInfo>
+          </UserInfoWrapper>
+        </UserProfileWrapper>
         <Content>{ content }</Content>
-      </Link>
+      </ContentContainer>
       <HashTagContainer>
         {hashTags.map(tag => (
           <Tag key={tag.hashTagId} $isSelected={false}>{ '#' + tag.name }</Tag>

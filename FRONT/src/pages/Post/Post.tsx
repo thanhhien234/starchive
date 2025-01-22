@@ -1,4 +1,4 @@
-import { PostContainer, MainContent, ButtonContainer } from "./Post.style";
+import { PostContainer, MainContent, ButtonContainer, Line, PostHashTagContainer } from "./Post.style";
 import {
   TagContainer,
   Title,
@@ -9,13 +9,26 @@ import {
   UserName,
   SubInfo,
   Content,
-  HashTagContainer,
 } from "../Home/components/PostItem/PostItem.style";
 import { Tag } from "@_components/TagWrapper/TagWrapper.style";
 import { Link } from "react-router-dom";
 import Button from "@_components/Button/Button";
+import { useParams } from 'react-router-dom';
+import { useQuery } from '@tanstack/react-query';
+import { fetchPost } from '@_services/postApi';
+import { ApiResponse } from '../../services/api';
+import { PostParams } from '../../types/post';
 
 function Post() {
+  const { postId } = useParams();
+
+  const {data} = useQuery<ApiResponse<PostParams>>({
+    queryKey: ['post', postId],
+    queryFn: () => fetchPost(Number(postId)),
+  });
+
+  const { title, author, createdAt, content, hashTags, categoryHier } = data?.data || {};
+
   return (
     <PostContainer>
       <ButtonContainer>
@@ -33,10 +46,10 @@ function Post() {
       <MainContent>
         <TagContainer>
           {categoryHier?.map(({ categoryId, categoryName }, i) => (
-            <>
+            <span key={categoryId}>
               {i !== 0 ? <span> &gt; </span> : null}
               <Link to={`/1?categoryId=${categoryId}`}>{categoryName}</Link>
-            </>
+            </span>
           ))}
         </TagContainer>
         <Title>{title}</Title>
@@ -56,14 +69,15 @@ function Post() {
             <SubInfo>어쩌구 저쩌구 개발자입니다.</SubInfo>
           </UserInfoWrapper>
         </UserProfileWrapper>
+        <Line/>
         <Content>{content}</Content>
-        <HashTagContainer>
-          {hashTags.map((tag) => (
+        <PostHashTagContainer>
+          {hashTags?.map((tag) => (
             <Tag key={tag.hashTagId} $isSelected={false}>
               {"#" + tag.name}
             </Tag>
           ))}
-        </HashTagContainer>
+        </PostHashTagContainer>
       </MainContent>
     </PostContainer>
   );

@@ -5,7 +5,7 @@ import CreatePost from './pages/CreatePost/CreatePost'
 import Navbar from '@_components/Navbar/Navbar'
 import Footer from '@_components/Footer/Footer'
 import Aside from '@_components/Aside/Aside'
-import useLoadingStore from './store/useLoadingStore';
+import useLoadingStore from './stores/useLoadingStore';
 import LoadingModal from '@_components/LoadingModal/LoadingModal';
 import Post from './pages/Post/Post';
 import Toast from './pages/CreatePost/components/Toast/Toast'
@@ -19,7 +19,7 @@ function App() {
       <Routes>
         <Route path='/:page?' element={<Home />} />
         <Route path='/create-post' element={<CreatePost />} />
-        <Route path='/post' element={<Post />} />
+        <Route path='/post/:postId' element={<Post />} />
       </Routes>
       <Footer />
       <LoadingModal isLoading={isLoading} />
