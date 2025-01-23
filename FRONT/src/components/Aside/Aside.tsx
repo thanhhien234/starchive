@@ -18,6 +18,12 @@ const ALL_POSTS = {
   children: []
 }
 
+const ORTHER = {
+  id: 0,
+  name: '기타',
+  children: []
+}
+
 function Aside() {
   const {
     categories,
@@ -57,6 +63,11 @@ function Aside() {
             />
             ))
           }
+          <CategoryNode
+            category={ORTHER}
+            onSelect={handleCategorySelect}
+            activeCategoryId={activeCategoryId}
+          />
         </CategoryList>
       </Wrapper>
     </>

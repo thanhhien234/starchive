@@ -15,11 +15,15 @@ function useAside() {
 
   const handleCategorySelect = (categoryId: CategoryId) => {
     setActiveCategoryId(categoryId);
-    navigate(
-      categoryId
-        ? `/1?categoryId=${categoryId}`
-        : `/`
-    );
+    if (categoryId === 0) {
+      navigate(`/?categoryId=0`);
+    } else {
+      navigate(
+        categoryId
+          ? `/1?categoryId=${categoryId}`
+          : `/`
+      );
+    }
     setIsAsideOpen(false);
   };
 
