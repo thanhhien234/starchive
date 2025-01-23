@@ -35,7 +35,7 @@ class CategoryDtoTest {
         entityManager.flush();
         entityManager.clear();
         System.out.println("---------------------쿼리3");
-        Category findOne = categoryRepository.findByIdWithChildren(parent.getId()).get();
+        Category findOne = categoryRepository.findByIdWithParentAndChildren(parent.getId()).get();
         System.out.println("---------------------쿼리4");
 
         //when

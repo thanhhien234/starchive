@@ -1,8 +1,8 @@
 package com.starchive.springapp.global.exception;
 
-import static com.starchive.springapp.global.ErrorMessage.INVALID_FILE_SIZE;
-
+import com.starchive.springapp.category.exception.CategoryAlreadyExistsException;
 import com.starchive.springapp.category.exception.CategoryNotFoundException;
+import com.starchive.springapp.global.dto.ErrorResult;
 import com.starchive.springapp.hashtag.exception.HashTagNotFoundException;
 import com.starchive.springapp.post.exception.PostNotFoundException;
 import java.util.HashMap;
@@ -28,21 +28,23 @@ public class GlobalExceptionHandler {
         return ResponseEntity.badRequest().body(errors);
     }
 
-    @ExceptionHandler(CategoryNotFoundException.class)
-    public ResponseEntity<String> handleMaxSizeException(CategoryNotFoundException ex) {
-        return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                .body(ex.getMessage());
+    @ExceptionHandler({CategoryNotFoundException.class, PostNotFoundException.class, HashTagNotFoundException.class})
+    public ResponseEntity<ErrorResult> handleNotFoundException(RuntimeException ex) {
+        ErrorResult errorResult = new ErrorResult(HttpStatus.BAD_REQUEST, ex.getMessage());
+        return ResponseEntity.badRequest()
+                .body(errorResult);
     }
 
-    @ExceptionHandler(PostNotFoundException.class)
-    public ResponseEntity<String> handlePostNotFoundException(PostNotFoundException ex) {
-        return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                .body(ex.getMessage());
+    @ExceptionHandler({CategoryAlreadyExistsException.class})
+    public ResponseEntity<ErrorResult> handleAlreadyExistsException(RuntimeException ex) {
+        ErrorResult errorResult = new ErrorResult(HttpStatus.BAD_REQUEST, ex.getMessage());
+        return ResponseEntity.badRequest()
+                .body(errorResult);
     }
 
-    @ExceptionHandler(HashTagNotFoundException.class)
-    public ResponseEntity<String> handleHashTagNotFoundException(HashTagNotFoundException ex) {
-        return ResponseEntity.status(HttpStatus.PAYLOAD_TOO_LARGE)
-                .body(INVALID_FILE_SIZE);
+    @ExceptionHandler(RuntimeException.class)
+    public ResponseEntity<ErrorResult> handleRuntimeException(RuntimeException ex) {
+        ErrorResult errorResult = new ErrorResult(HttpStatus.INTERNAL_SERVER_ERROR, ex.getMessage());
+        return ResponseEntity.internalServerError().body(errorResult);
     }
 }
