@@ -24,7 +24,6 @@ function CategorySelector({ categories, onCategorySelect}: CategorySelectorProps
     setSelectedCategory(category);
     if (category.id) onCategorySelect(category.id);
     setIsDropdownOpen(false);
-    console.log(category.id);
   };
 
   return (
@@ -36,7 +35,10 @@ function CategorySelector({ categories, onCategorySelect}: CategorySelectorProps
 
       {isDropdownOpen && (
         <DropdownList>
-          {categories.map((category) => (
+          <BigCategory onClick={() => handleSelect({ id: 0, name: "카테고리 없음", children: [] })}>
+            카테고리 없음
+          </BigCategory>
+          {categories?.map((category) => (
             <CategoryItem key={category.id}>
               <BigCategory onClick={() => handleSelect(category)}>
                 <img src={dropdownArrow} alt="Dropdown Arrow" />
