@@ -51,7 +51,10 @@ function Aside() {
           {categories?.map((topCategory: Category) => (
             <CategoryNode
               key={topCategory.id}
-              category={topCategory}
+              category={{
+                ...topCategory,
+                name: topCategory.id === 0 ? "기타" : topCategory.name
+              }}
               onSelect={handleCategorySelect}
               activeCategoryId={activeCategoryId}
             />

@@ -1,7 +1,7 @@
 import PostItem from "./components/PostItem/PostItem";
 import PagingButton from "@_components/PagingButton/PagingButton";
-import { ButtonWrapper, PagingButtonWrapper, PostItemContainer, Wrapper } from "./Home.style";
-import { Post } from "../../types/post";
+import { ButtonWrapper, PagingButtonWrapper, PostItemContainer, PostListWithTags, Wrapper } from "./Home.style";
+import { PostParams } from "../../types/post";
 import TagWrapper from "@_components/TagWrapper/TagWrapper";
 import { useTag } from "@_components/TagWrapper/useTag";
 import { useNavigate, useParams, useSearchParams } from "react-router-dom";
@@ -13,23 +13,26 @@ function Home() {
   const currentPage = page ? Number(page) : 1;
   const [searchParams ] = useSearchParams();
   const categoryId = searchParams.get('categoryId') ? Number(searchParams.get('categoryId')) : undefined;
+  const pageSize = searchParams.get('pageSize') ? Number(searchParams.get('pageSize')) : undefined;
   const {
     tagList,
     selectedTag,
-    posts, 
-    handleTagClick 
-  } = useTag({ categoryId, page });
+    posts,
+    handleTagClick,
+    totalPages,
+  } = useTag({ categoryId, page: currentPage - 1, pageSize });
 
   return (
     <Wrapper>
       <ButtonWrapper>
         <Button content='작성하기' type='Primary' handleButtonClick={() => navigate('/create-post')} />
       </ButtonWrapper>
-      <TagWrapper tagList={tagList} onTagClick={handleTagClick} selectedTag={selectedTag}/>
-      <PostItemContainer>
+      <PostListWithTags>
+        <PostItemContainer>
         {
-          posts.map((postItem: Post, i: number) => 
-            <PostItem 
+          posts.map((postItem: PostParams, i: number) =>
+            <PostItem
+              postId={postItem.postId}
               title={postItem.title}
               createdAt={postItem.createdAt}
               content={postItem.content}
@@ -41,10 +44,12 @@ function Home() {
             />
           )
         }
-      </PostItemContainer>
+        </PostItemContainer>
+        <TagWrapper tagList={tagList} onTagClick={handleTagClick} selectedTag={selectedTag}/>
+      </PostListWithTags>
       <PagingButtonWrapper>
         <PagingButton
-          totalPages={10}
+          totalPages={totalPages}
           currentPage={currentPage}
           setCurrentPage={(newPage: number) => navigate(`/${newPage}${searchParams.toString()}`)}
         />

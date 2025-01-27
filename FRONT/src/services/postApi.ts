@@ -1,4 +1,4 @@
-import { Post } from "../types/post";
+import { PostParams } from "../types/post";
 import { getRequest } from "./api";
 
 interface PostListParams {
@@ -19,7 +19,11 @@ export const fetchPostList = (params?: PostListParams) => {
     Object.entries(queryParams).map(([key, value]) => [key, String(value)])
   );
 
-  return getRequest<Post[]>('/posts', { 
+  return getRequest<PostParams[]>('/posts', { 
     params: stringifiedParams
   });
 };
+
+export const fetchPost = (postId: number) => {
+  return getRequest<PostParams>(`/post/${postId}`);
+}

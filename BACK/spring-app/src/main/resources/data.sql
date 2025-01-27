@@ -1,0 +1,1 @@
+INSERT IGNORE INTO Categories (categoryId, name) VALUES (0, '카테고리 없음');

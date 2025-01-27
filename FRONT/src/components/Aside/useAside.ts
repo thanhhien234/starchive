@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import useAsideStore from '../../store/useAsideStore';
+import useAsideStore from '../../stores/useAsideStore';
 import { Category, CategoryId } from '../../types/category';
 import { fetchCategories } from '@_services/categoryApi';
 import { useQuery } from '@tanstack/react-query';
@@ -17,7 +17,7 @@ function useAside() {
     setActiveCategoryId(categoryId);
     navigate(
       categoryId
-        ? `/1/categoryId=${categoryId}`
+        ? `/1?categoryId=${categoryId}`
         : `/`
     );
     setIsAsideOpen(false);

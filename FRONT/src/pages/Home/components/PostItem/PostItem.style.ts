@@ -70,8 +70,10 @@ export const Content = styled.p`
 
 export const TagContainer = styled.span`
   color: var(--point-color);
+  display: flex;
+  gap: 5px;
 
-  & > a {
+  & a {
     color: var(--point-color);
     text-decoration: none;
   }
@@ -80,4 +82,11 @@ export const TagContainer = styled.span`
 export const HashTagContainer = styled.div`
   display: flex;
   gap: 5px;
+`;
+
+export const ContentContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  cursor: pointer;
 `;
