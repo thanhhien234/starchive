@@ -1,4 +1,4 @@
-import { PostContainer, MainContent, ButtonContainer, Line, PostHashTagContainer } from "./Post.style";
+import { PostContainer, MainContent, ButtonContainer, Line, PostHashTagContainer, Content } from "./Post.style";
 import {
   TagContainer,
   Title,
@@ -8,7 +8,6 @@ import {
   UserNameWrapper,
   UserName,
   SubInfo,
-  Content,
 } from "../Home/components/PostItem/PostItem.style";
 import { Tag } from "@_components/TagWrapper/TagWrapper.style";
 import { Link } from "react-router-dom";

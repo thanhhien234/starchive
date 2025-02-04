@@ -30,6 +30,10 @@ export const Line = styled.div`
   margin: 15px 0;
 `;
 
+export const Content = styled.div`
+  padding: 40px 40px 80px 40px;
+`
+
 export const PostHashTagContainer = styled(HashTagContainer)`
   margin-top: 20px;
 `;
