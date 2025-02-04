@@ -37,8 +37,8 @@ function CategorySelector({ categories, onCategorySelect}: CategorySelectorProps
         <DropdownList>
           {categories?.map((category) => (
             <CategoryItem key={category.id}>
-              <BigCategory onClick={() => handleSelect(category)} $hasChildren={category.id !== 0}>
-                {category.id !== 0 && <img src={dropdownArrow} alt="Dropdown Arrow" />}
+              <BigCategory onClick={() => handleSelect(category)}>
+                {category.children.length > 0 && <img src={dropdownArrow} alt="Dropdown Arrow" />}
                 {category.name}
               </BigCategory>
               {category.children && (

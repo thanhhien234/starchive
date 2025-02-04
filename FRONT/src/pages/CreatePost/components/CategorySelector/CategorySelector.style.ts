@@ -43,20 +43,13 @@ export const CategoryItem = styled.li`
   font-size: 16px;
 `;
 
-export const BigCategory = styled.div<{ $hasChildren?: boolean }>`
+export const BigCategory = styled.div`
   cursor: pointer;
   display: flex;
   flex-direction: row;
   align-items: center;
   gap: 5px;
   padding: 5px 0;
-
-  &::before {
-    content: "";
-    display: ${({ $hasChildren }) => ($hasChildren ? "none" : "inline-block")};
-    width: 20px;
-    height: 20px;
-  }
 
   img {
     width: 20px;
