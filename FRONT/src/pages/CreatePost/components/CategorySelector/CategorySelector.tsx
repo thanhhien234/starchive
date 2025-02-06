@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import dropdownArrow from "@_assets/icons/drop-down-icon.svg";
 import {
   CategorySelectorContainer,
@@ -14,11 +14,32 @@ import { Category } from "../../../../types/category";
 interface CategorySelectorProps {
   categories: Category[],
   onCategorySelect: (id: number) => void,
+  defaultCategoryId?: number | null, 
 }
 
-function CategorySelector({ categories, onCategorySelect}: CategorySelectorProps) {
+function CategorySelector({ categories, onCategorySelect, defaultCategoryId}: CategorySelectorProps) {
   const [selectedCategory, setSelectedCategory] = useState<Category | null>(null);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+
+  const findCategoryById = (categories: Category[], id: number): Category | null => {
+    for (const category of categories) {
+      if (category.id === id) return category;
+      if (category.children.length > 0) {
+        const found = findCategoryById(category.children, id);
+        if (found) return found;
+      }
+    }
+    return null;
+  };
+
+  useEffect(() => {
+    if (defaultCategoryId) {
+      const category = findCategoryById(categories, defaultCategoryId);
+      if (category) {
+        setSelectedCategory(category);
+      }
+    }
+  }, [defaultCategoryId]);
 
   const handleSelect = (category: Category) => {
     setSelectedCategory(category);
