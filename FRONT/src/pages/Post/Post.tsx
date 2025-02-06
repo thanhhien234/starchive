@@ -18,8 +18,10 @@ import { useQuery } from '@tanstack/react-query';
 import { fetchPost } from '@_services/postApi';
 import { ApiResponse } from '../../services/api';
 import { PostParams } from '../../types/post';
+import { useNavigate } from "react-router-dom";
 
 function Post() {
+  const navigate = useNavigate();
   const { postId } = useParams();
 
   const {data} = useQuery<ApiResponse<PostParams>>({
@@ -35,7 +37,7 @@ function Post() {
         <Button
           content="수정"
           type="Primary"
-          handleButtonClick={() => console.log("Edit")}
+          handleButtonClick={() => navigate(`/edit-post/${postId}`)}
         />
         <Button
           content="삭제"
