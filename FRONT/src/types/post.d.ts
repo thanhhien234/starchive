@@ -23,3 +23,12 @@ export interface CreatePostParams {
   hashTagIds: number[],
   imageIds: number[]
 }
+
+export interface EditPostParams {
+  postId: number,
+  title: string,
+  content: string,
+  categoryId: number,
+  hashTagIds: number[],
+  imageIds: number[]
+}
